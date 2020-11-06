@@ -1,12 +1,25 @@
 import Vue from 'vue'
-import App from './App.vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import routes from './routes'
+import About from './pages/About'
+import Home from './pages/Home'
 
-Vue.use(BootstrapVue)
-Vue.config.productionTip = true
+const app = new Vue({
+  el: '#app',
+  data: {
+    currentRoute: window.location.pathname
+  },
+  computed: {
+    ViewComponent () {
+      const matchingView = routes[this.currentRoute]
+      const newPath = matchingView==='About' ?About:Home
+      return newPath
+    }
+  },
+  render (h) {
+    return h(this.ViewComponent)
+  }
+})
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+window.addEventListener('popstate', () => {
+  app.currentRoute = window.location.pathname
+})
