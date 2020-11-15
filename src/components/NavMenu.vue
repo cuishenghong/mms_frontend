@@ -7,23 +7,6 @@
       @select="handleSelect"
       router
     >
-      <!-- 
-      <el-menu-item index="1">电影</el-menu-item>
-      <el-menu-item index="2">小说</el-menu-item>
-      <el-submenu index="3">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="3-1">选项1</el-menu-item>
-        <el-menu-item index="3-2">选项2</el-menu-item>
-        <el-menu-item index="3-3">选项3</el-menu-item>
-        <el-submenu index="3-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="3-4-1">选项1</el-menu-item>
-          <el-menu-item index="3-4-2">选项2</el-menu-item>
-          <el-menu-item index="3-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu> 
-      -->
-
       <template v-for="item in navMenuData">
         <el-menu-item :index="item.index" v-if="!item.child">{{item.name}}</el-menu-item>
 
@@ -46,7 +29,9 @@ export default {
       activeIndex: "main",     
       navMenuData: [
         { index: "main", name: "主页" },
-        { index: "helloworld", name: "helloworld" },       
+        { index: "helloworld", name: "库存管理" },         
+        { index: "helloworld", name: "入库管理" },       
+        { index: "helloworld", name: "系统管理" },       
         { index: "not-found", name: "NotFound" },
         {
           index: "2",
@@ -66,7 +51,6 @@ export default {
       console.log(this.activeIndex)        
       console.log(this.$route.path)      
       this.activeIndex = this.$route.path.substring(1,this.$route.path.length);     
-
   }
 };
 </script>
