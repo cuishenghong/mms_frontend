@@ -46,7 +46,9 @@ export default {
       activeIndex: "main",     
       navMenuData: [
         { index: "main", name: "主页" },
-        { index: "helloworld", name: "helloworld" },       
+        { index: "helloworld", name: "库存管理" },         
+        { index: "helloworld", name: "入库管理" },       
+        { index: "helloworld", name: "系统管理" },       
         { index: "not-found", name: "NotFound" },
         {
           index: "2",

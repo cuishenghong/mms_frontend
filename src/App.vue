@@ -1,13 +1,6 @@
 <template>
   <div id="app">
     <el-container v-if="$route.meta.keepalive">
-      <el-header class="header">
-        <keep-alive>
-          <v_Header></v_Header>
-        </keep-alive>
-      </el-header>
-
-       <el-container>
         <el-header>
           <v_NavMenu></v_NavMenu>
         </el-header>
@@ -15,26 +8,6 @@
           <router-view></router-view> <!--路由出口 -->
         </el-main>
      </el-container>
-
-      <el-container>
-        <el-aside style="width:200px; height:600px">
-          <keep-alive>
-            <v_leftmenu></v_leftmenu>
-          </keep-alive>
-        </el-aside>
-        <el-container>
-          <el-main>
-            <keep-alive>
-              <router-view></router-view>
-            </keep-alive>
-          </el-main>
-          <el-footer style=" padding-left: 0px;padding-right: 0px;">
-            <v_footer></v_footer>
-          </el-footer>
-        </el-container>
-      </el-container>
-    </el-container>
-   
     <router-view v-if="!$route.meta.keepalive"></router-view>
   </div>
 </template>
@@ -70,4 +43,20 @@ export default {
     background-color: #545c64;
     text-color: white;
   }
+  .el-header,
+  .el-footer {
+    background-color: #b3c0d1;
+    color: #333;
+    text-align: center;
+    height: 100px;
+    padding: 0px;
+  }
+
+  .el-main {
+    background-color: #e9eef3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
+
 </style>
