@@ -1,25 +1,26 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import routes from './routes'
-import About from './pages/About'
-import Home from './pages/Home'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-const app = new Vue({
+import App from './App'
+import router from './router'
+import VueAxios from 'vue-axios'
+import axios from 'axios'
+import { post } from './config/common/index'
+
+Vue.use(VueAxios, axios)
+Vue.config.productionTip = false;
+
+Vue.use(ElementUI)
+Vue.prototype.$post = post
+
+/* eslint-disable no-new */
+var app = new Vue({
   el: '#app',
-  data: {
-    currentRoute: window.location.pathname
-  },
-  computed: {
-    ViewComponent () {
-      const matchingView = routes[this.currentRoute]
-      const newPath = matchingView==='About' ?About:Home
-      return newPath
-    }
-  },
-  render (h) {
-    return h(this.ViewComponent)
-  }
-})
-
-window.addEventListener('popstate', () => {
-  app.currentRoute = window.location.pathname
+  /* 创建和挂载根实例 */
+  router,
+  components: { App },
+  template: '<App/>'
 })
