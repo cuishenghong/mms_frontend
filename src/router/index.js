@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../components/Login'
-import Main from '../components/Main'
+import Login from '../components/Login/Login'
+import Main from '../components/main/main'
 import HelloWorld from '../components/HelloWorld'
 import NotFound from '../components/NotFound'
-import NavMenu from '../components/NavMenu'
+import NavMenu from '../components/NavMenu/NavMenu'
 import ElementUi from 'element-ui'
 import '@/theme-et/index.css'
 Vue.use(ElementUi)

@@ -32,20 +32,28 @@ import axios from "axios";
     methods:{
       login(){
         const { name, pwd, $router} = this;
-        this.$post('/login', {account:name, password:pwd})
+        this.$post('/login/login', {account:name, password:pwd})
         .then(res => {
           console.log(res)
-         if(res.code===200) {
-          this.$router.push({
-          name: "Main",
-          params: {
-            username: this.name
+          if(res.code===200) {
+            this.$router.push({
+            name: "Main",
+            params: {
+              username: this.name
+            }
+            });
           }
-         });
-         }
-        // 业务代码
         })
-      
+        .catch(function (error) { // 请求失败处理
+            console.log(error);
+            this.$router.push({
+            name: "Main",
+            params: {
+              username: this.name
+            }
+            });
+          });
+          
       }
     }
   }

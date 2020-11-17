@@ -8,13 +8,23 @@ import App from './App'
 import router from './router'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
-import { post } from './config/common/index'
+import { get,post } from './config/common/index'
 
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI)
 Vue.prototype.$post = post
+Vue.prototype.$get = get
+ 
+
+//将axios挂载到原型上
+Vue.prototype.$axios = axios;
+ 
+//配置全局的axios默认值（可选）
+ 
+axios.defaults.headers.common['Authorization'] ="testHeader";
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 /* eslint-disable no-new */
 var app = new Vue({

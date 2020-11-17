@@ -15,8 +15,8 @@
 <script>
 import LeftMenu from "./components/LeftMenu"
 import Header from "./components/Header"
-import  Footer from './components/Footer'
-import NavMenu from './components/NavMenu'
+import Footer from './components/Footer'
+import NavMenu from './components/NavMenu/NavMenu'
 
 export default {
   name: 'App',
@@ -24,7 +24,7 @@ export default {
     'v_Header': Header,
     'v_leftmenu': LeftMenu,
     'v_footer': Footer,   
-     'v_NavMenu': NavMenu
+    'v_NavMenu': NavMenu
 
   }
 }
