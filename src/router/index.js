@@ -5,6 +5,7 @@ import Main from '../components/main/main'
 import HelloWorld from '../components/HelloWorld'
 import NotFound from '../components/NotFound'
 import NavMenu from '../components/NavMenu/NavMenu'
+import ProductionInfo from '../components/ProductionInfo/ProductionInfo'
 import ElementUi from 'element-ui'
 import '@/theme-et/index.css'
 Vue.use(ElementUi)
@@ -12,6 +13,7 @@ Vue.use(ElementUi)
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
@@ -41,6 +43,14 @@ export default new Router({
       path: '/NavMenu',
       name: 'NavMenu',
       component: NavMenu,
+      meta:{
+        keepalive:true
+      }
+    },
+    {
+      path: '/ProductionInfo',
+      name: 'ProductionInfo',
+      component: ProductionInfo,
       meta:{
         keepalive:true
       }
