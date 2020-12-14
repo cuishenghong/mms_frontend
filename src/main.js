@@ -3,13 +3,13 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './components/Style/main.css'
 
 import App from './App'
 import router from './router'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
 import { get,post } from './config/common/index'
-
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false;
 

@@ -38,8 +38,7 @@
             </el-table-column>
         </el-table>
         <div class="block">
-            <span class="demonstration">完整功能</span>
-            <el-pagination
+             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="1"
@@ -126,12 +125,4 @@ export default {
 };
 </script>
 
-<style>
-.main {
-    font-size: 30px;
-    color: #000000;
-}
-.header-title {
-    margin: 0px;
-}
-</style>
+
