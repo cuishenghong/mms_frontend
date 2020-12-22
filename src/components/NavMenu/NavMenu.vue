@@ -35,7 +35,13 @@ export default {
                 { index: "main", name: "主页" },
                 { index: "helloworld", name: "库存管理" },
                 { index: "helloworld", name: "入库管理" },
-                { index: "helloworld", name: "系统管理" },
+                { index: "sysManage", name: "系统管理",
+                    child: [
+                        { index: "userManage", name: "用户管理" },
+                        { index: "permManage", name: "权限管理" },
+                        { index: "dictManage", name: "字典管理" },
+                    ], 
+                },
                 { index: "not-found", name: "NotFound" },
                 {
                     index: "2",
