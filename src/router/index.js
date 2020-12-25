@@ -7,6 +7,8 @@ import NotFound from '../components/NotFound'
 import NavMenu from '../components/NavMenu/NavMenu'
 import ProductionInfo from '../components/ProductionInfo/ProductionInfo'
 import UserManage from '../components/SysManage/UserManage'
+import RoleManage from '../components/SysManage/RoleManage'
+import PermManage from '../components/SysManage/PermManage'
 import ElementUi from 'element-ui'
 import '@/theme-et/index.css'
 Vue.use(ElementUi)
@@ -60,6 +62,22 @@ export default new Router({
       path: '/UserManage',
       name: 'UserManage',
       component: UserManage,
+      meta:{
+        keepalive:true
+      }
+    },
+    {
+      path: '/RoleManage',
+      name: 'RoleManage',
+      component: RoleManage,
+      meta:{
+        keepalive:true
+      }
+    },
+    {
+      path: '/PermManage',
+      name: 'PermManage',
+      component: PermManage,
       meta:{
         keepalive:true
       }

@@ -192,8 +192,8 @@ export default {
         console.log(this.createForm);
         return {
             titleMap: {
-                addEquipment: "新增用户",
-                editEquipment: "编辑用户信息",
+                addEquipment: "新增设备",
+                editEquipment: "编辑设备",
             },
             dialogStatus: "",
             tableData: this.tableData,

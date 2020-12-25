@@ -1,7 +1,8 @@
 .main {
     font-size: 30px;
     color: #000000;
-    width: 1440px;
+    max-width: 1250px;
+    width: 80%;
     margin: 0 auto;
 }
 .header-title {
@@ -49,4 +50,9 @@
 .el-dialog__title {
     display: block;
     font-weight: bold;
+}
+.detail-form {
+    margin: 10px;
+    background-color:#FFFFFF;
+    padding: 34px;
 }

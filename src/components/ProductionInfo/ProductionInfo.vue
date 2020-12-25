@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <h1 class="header-title">{{ msg }}</h1>
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="form" label-width="80px" class="detail-form">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="商品Id">

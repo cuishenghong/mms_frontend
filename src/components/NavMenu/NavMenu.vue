@@ -38,6 +38,7 @@ export default {
                 { index: "sysManage", name: "系统管理",
                     child: [
                         { index: "userManage", name: "用户管理" },
+                        { index: "roleManage", name: "角色管理" },
                         { index: "permManage", name: "权限管理" },
                         { index: "dictManage", name: "字典管理" },
                     ], 
