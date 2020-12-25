@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login/Login'
 import Main from '../components/main/main'
-import HelloWorld from '../components/HelloWorld'
+import Inventory from '../components/Inventory/ProductionDetail'
 import NotFound from '../components/NotFound'
 import NavMenu from '../components/NavMenu/NavMenu'
 import ProductionInfo from '../components/ProductionInfo/ProductionInfo'
@@ -35,9 +35,9 @@ export default new Router({
       }
     },
     {
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      path: '/Inventory',
+      name: 'Inventory',
+      component: Inventory,
       meta:{
         keepalive:true
       }

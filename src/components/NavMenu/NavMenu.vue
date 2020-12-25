@@ -33,7 +33,11 @@ export default {
             activeIndex: "main",
             navMenuData: [
                 { index: "main", name: "主页" },
-                { index: "helloworld", name: "库存管理" },
+                { index: "Inventory", name: "库存管理",
+                 child: [
+                        { index: "Inventory", name: "产品管理" },
+                        
+                    ],  },
                 { index: "helloworld", name: "入库管理" },
                 { index: "sysManage", name: "系统管理",
                     child: [
