@@ -20,7 +20,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="onSubmit(selectForm)"
+                <el-button type="primary" @click="handleSearch(selectForm)"
                     >查询</el-button
                 >
             </el-form-item>
@@ -217,7 +217,7 @@ export default {
         };
     },
     methods: {
-        onSubmit(form) {
+        handleSearch(form) {
             console.log("submit!");
             this.$post("/user/getUserList", {
                 name: form.name,
@@ -297,6 +297,40 @@ export default {
                     .catch(function (error) {
                         console.log(error);
                     });
+        },
+        handleCurrentChange(val) {
+            this.$post("/perm/getPermList", {
+                pageNum: val,
+                pageSize: this.pageSize,
+            })
+                .then((res) => {
+                    this.tableData = res.resultList;
+                    this.totalpage = res.totalpage;
+                    this.totalCount = res.totalCount;
+                    this.pageNum = val;
+                    this.pageSize = this.pageSize;
+                    // 业务代码
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleSizeChange(val) {
+            this.$post("/perm/getPermList", {
+                pageNum: this.pageNum,
+                pageSize: val,
+            })
+                .then((res) => {
+                    this.tableData = res.resultList;
+                    this.totalpage = res.totalpage;
+                    this.totalCount = res.totalCount;
+                    this.pageSize = val;
+                    this.pageNum = this.pageNum;
+                    // 业务代码
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
     },
     mounted() {

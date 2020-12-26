@@ -1,7 +1,32 @@
 <template>
     <div class="main">
+           <el-form
+            :inline="true"
+            :model="selectForm"
+            class="demo-form-inline"
+            style="line-height: 80px !important"
+        >
+            <el-form-item label="用户名">
+                <el-input
+                    v-model="selectForm.name"
+                    placeholder="用户名"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="账号">
+                <el-input
+                    v-model="selectForm.account"
+                    placeholder="账号"
+                ></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="handleSearch(selectForm)"
+                    >查询</el-button
+                >
+            </el-form-item>
+        </el-form>
         <h1 class="header-title">{{ msg }}</h1>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table :data="selectForm" border style="width: 100%">
             <el-table-column
                 fixed
                 prop="createTime"
@@ -59,7 +84,7 @@ export default {
         var pageNum = 1;
         return {
             msg: "库存表",
-            tableData: this.tableData,
+            selectForm: this.selectForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -80,7 +105,7 @@ export default {
                 pageSize: this.pageSize,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.selectForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
@@ -97,7 +122,7 @@ export default {
                 pageSize: val,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.selectForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
@@ -112,7 +137,7 @@ export default {
     mounted() {
         this.$post("/inventory/getInventoryList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
-                this.tableData = res.resultList;
+                this.selectForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
 

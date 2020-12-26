@@ -38,7 +38,6 @@ export default {
                         { index: "Inventory", name: "产品管理" },
                         
                     ],  },
-                { index: "helloworld", name: "入库管理" },
                 { index: "sysManage", name: "系统管理",
                     child: [
                         { index: "userManage", name: "用户管理" },

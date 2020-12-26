@@ -20,7 +20,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="onSubmit(selectForm)"
+                <el-button type="primary" @click="handleSearch(selectForm)"
                     >查询</el-button
                 >
             </el-form-item>
@@ -81,14 +81,14 @@
                 ></el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="createUser(createForm)">
+                    <el-button type="primary" @click="createUser(createForm,dialogStatus)">
                         创建
                     </el-button>
                     <el-button @click="handleAddUser(false)">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table :data="displayForm" border style="width: 100%">
             <el-table-column fixed prop="name" label="用户名" width="150">
             </el-table-column>
             <el-table-column
@@ -105,7 +105,7 @@
                 prop="sex"
                 label="性别"
                 width="80"
-            ></el-table-column>
+            ><template slot-scope="scope">{{ scope.row.sex === '1' ? '男' : '女' }}</template></el-table-column>
             <el-table-column
                 prop="mobilePhone"
                 label="手机号"
@@ -192,11 +192,11 @@ export default {
         console.log(this.createForm);
         return {
             titleMap: {
-                addEquipment: "新增用户",
-                editEquipment: "编辑用户信息",
+                addUser: "新增用户",
+                editUser: "编辑用户信息",
             },
             dialogStatus: "",
-            tableData: this.tableData,
+            displayForm: this.displayForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -217,7 +217,7 @@ export default {
         };
     },
     methods: {
-        onSubmit(form) {
+        handleSearch(form) {
             console.log("submit!");
             this.$post("/user/getUserList", {
                 name: form.name,
@@ -226,7 +226,7 @@ export default {
                 pageSize: 10,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
 
@@ -246,7 +246,7 @@ export default {
         handleDelete(id) {
             this.$post("/user/deleteUser", { id: id, pageNum: 1, pageSize: 10 })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                 })
@@ -257,14 +257,15 @@ export default {
 
         handleAddUser(flag) {
             if (flag) { this.createForm = {};
-                (this.addUser = true), (this.dialogStatus = "addEquipment");
+                (this.addUser = true), (this.dialogStatus = "addUser");
             } else {
                 this.addUser = false;
             }
         },
 
-        createUser(form) {
-            this.$post("/user/insertUser", {
+        createUser(form,flag) {
+            if(flag === "addUser"){
+                this.$post("/user/insertUser", {
                 name: form.name,
                 account: form.account,
                 password: form.password,
@@ -275,16 +276,38 @@ export default {
                 .then((res) => {
                     this.addUser = false;
                     this.createForm = {};
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            }else{
+                this.$post("/user/updateUser", {
+                id:form.id,
+                name: form.name,
+                account: form.account,
+                password: form.password,
+                sex: form.sex,
+                mobilePhone: form.mobilePhone,
+                mail: form.mail,
+            })
+                .then((res) => {
+                    this.addUser = false;
+                    this.createForm = {};
+                    this.displayForm = res.resultList;
+                    this.totalpage = res.totalpage;
+                    this.totalCount = res.totalCount;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
         editUser(id) {
-            this.dialogStatus = "editEquipment";
+            this.dialogStatus = "editUser";
+            this.createForm = {},
             (this.addUser = true),
                 this.$post("/user/getUserList", {
                     id,
@@ -298,11 +321,45 @@ export default {
                         console.log(error);
                     });
         },
+        handleCurrentChange(val) {
+            this.$post("/user/getUserList", {
+                pageNum: val,
+                pageSize: this.pageSize,
+            })
+                .then((res) => {
+                    this.tableData = res.resultList;
+                    this.totalpage = res.totalpage;
+                    this.totalCount = res.totalCount;
+                    this.pageNum = val;
+                    this.pageSize = this.pageSize;
+                    // 业务代码
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleSizeChange(val) {
+            this.$post("/user/getUserList", {
+                pageNum: this.pageNum,
+                pageSize: val,
+            })
+                .then((res) => {
+                    this.tableData = res.resultList;
+                    this.totalpage = res.totalpage;
+                    this.totalCount = res.totalCount;
+                    this.pageSize = val;
+                    this.pageNum = this.pageNum;
+                    // 业务代码
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
     },
     mounted() {
         this.$post("/user/getUserList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
-                this.tableData = res.resultList;
+                this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
 
