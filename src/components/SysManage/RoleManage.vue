@@ -158,8 +158,7 @@ export default {
     },
     methods: {
         handleSearch(form) {
-            console.log("submit!");
-            this.$post("/role/getRoleList", {
+             this.$post("/role/getRoleList", {
                 name: form.name,
                 account: form.account,
                 pageNum: 1,
