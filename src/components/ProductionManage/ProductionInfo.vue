@@ -6,16 +6,16 @@
             class="demo-form-inline"
             style="line-height: 80px !important"
         >
-            <el-form-item label="用户名">
+            <el-form-item label="商品名称">
                 <el-input
-                    v-model="selectForm.name"
-                    placeholder="用户名"
+                    v-model="selectForm.productionName"
+                    placeholder="商品名称"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="账号">
+            <el-form-item label="商品类型">
                 <el-input
-                    v-model="selectForm.account"
-                    placeholder="账号"
+                    v-model="selectForm.productionType"
+                    placeholder="商品类型"
                 ></el-input>
             </el-form-item>
 
@@ -25,103 +25,145 @@
                 >
             </el-form-item>
         </el-form>
-        <el-button class="add-button" type="success" @click="handleAddUser('1')"
+        <el-button class="add-button" type="success" @click="handleAddProd('1')"
             >新增用户</el-button
         >
         <el-dialog
             :title="titleMap[dialogStatus]"
-            :visible.sync="addUser"
+            :visible.sync="addProd"
             width="60%"
             :before-close="handleClose"
         >
             <el-form ref="createForm" :model="createForm" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="12"
-                        ><el-form-item label="用户姓名" >
+                        ><el-form-item label="商品名称">
                             <el-input
-                                v-model="createForm.name"
+                                v-model="createForm.productionName"
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
-                        ><el-form-item label="用户账号">
+                        ><el-form-item label="商品种类">
+                            <el-select
+                                v-model="createForm.productionType"
+                                placeholder="商品种类"
+                                ><el-option
+                                    label="透明碗"
+                                    value="3"
+                                ></el-option>
+                                <el-option label="套碗" value="2"></el-option>
+                                <el-option label="单碗" value="1"></el-option>
+                            </el-select> </el-form-item
+                    ></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="12"
+                        ><el-form-item label="频率">
                             <el-input
-                                v-model="createForm.account"
+                                v-model="createForm.frequency"
                             ></el-input> </el-form-item
+                    ></el-col>
+                    <el-col :span="12"
+                        ><el-form-item label="是否包">
+                            <el-select
+                                v-model="createForm.pack"
+                                placeholder="是否包"
+                            >
+                                <el-option label="否" value="2"></el-option>
+                                <el-option label="是" value="1"></el-option>
+                            </el-select> </el-form-item
                     ></el-col>
                 </el-row>
                 <el-row :gutter="20"
                     ><el-col :span="12"
-                        ><el-form-item label="用户密码">
+                        ><el-form-item label="音调">
                             <el-input
-                                v-model="createForm.password"
+                                v-model="createForm.pitch"
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
-                        ><el-form-item label="性别">
-                            <el-select
-                                v-model="createForm.sex"
-                                placeholder="请选择性别"
-                            >
-                                <el-option label="女" value="2"></el-option>
-                                <el-option label="男" value="1"></el-option>
-                            </el-select> </el-form-item></el-col
-                ></el-row>
-                <el-row :gutter="20"
-                    ><el-col :span="12"
-                        ><el-form-item label="手机号">
+                        ><el-form-item label="尺寸">
                             <el-input
-                                v-model="createForm.mobilePhone"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="邮箱">
-                            <el-input
-                                v-model="createForm.mail"
+                                v-model="createForm.size"
                             ></el-input> </el-form-item></el-col
                 ></el-row>
 
+                <el-row :gutter="20">
+                    <el-col :span="12"
+                        ><el-form-item label="颜色1">
+                            <el-input
+                                v-model="createForm.color1"
+                            ></el-input> </el-form-item
+                    ></el-col>
+                    <el-col :span="12"
+                        ><el-form-item label="颜色2">
+                            <el-input
+                                v-model="createForm.color2"
+                            ></el-input> </el-form-item></el-col
+                ></el-row>
                 <el-form-item>
                     <el-button
                         type="primary"
-                        @click="createUser(createForm, dialogStatus)"
+                        @click="createProd(createForm, dialogStatus)"
                     >
                         创建
                     </el-button>
-                    <el-button @click="handleAddUser(false)">取消</el-button>
+                    <el-button @click="handleAddProd(false)">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
         <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column fixed prop="name" label="用户名" width="150">
+            <el-table-column fixed prop="productionName" label="商品名称">
             </el-table-column>
-            <el-table-column prop="account" label="账号" width="100"></el-table-column>
-            <el-table-column prop="alias" label="昵称" width="100"></el-table-column>
-            <el-table-column prop="sex" label="性别"
+            <el-table-column prop="productionType" label="商品类型"
                 ><template slot-scope="scope">{{
-                    scope.row.sex === "1" ? "男" : "女"
+                    scope.row.sex === "1"
+                        ? "单碗"
+                        : scope.row.sex === "2"
+                        ? "套碗"
+                        : "透明碗"
                 }}</template></el-table-column
             >
+            <el-table-column prop="frequency" label="频率"></el-table-column>
+            <el-table-column prop="sex" label="是否包"
+                ><template slot-scope="scope">{{
+                    scope.row.sex === "1" ? "是" : "否"
+                }}</template></el-table-column
+            >
+            <el-table-column prop="pitch" label="音调"></el-table-column>
+            <el-table-column prop="size" label="尺寸"></el-table-column>
             <el-table-column
-                prop="mobilePhone"
-                label="手机号"  width="200"
-            ></el-table-column>
-            <el-table-column prop="mail" label="邮箱"  width="200"></el-table-column>
-            <el-table-column prop="slogan" label="标语"  width="200"></el-table-column>
-            <el-table-column prop="creator" label="创建人" width="100"></el-table-column>
+                prop="color1"
+                label="颜色1"
+             ></el-table-column
+            ><el-table-column
+                prop="color2"
+                label="颜色2"
+             ></el-table-column>
+            <el-table-column
+                prop="creator"
+                label="创建人"  width="100"
+             ></el-table-column>
             <el-table-column
                 prop="createTime"
-                label="创建日期"
-            ></el-table-column>
-            <el-table-column prop="modifier" label="修改人" width="100"></el-table-column>
+                label="创建日期"  width="100"
+             ></el-table-column>
+            <el-table-column
+                prop="modifier"
+                label="修改人"  width="100"
+             ></el-table-column>
             <el-table-column
                 prop="updateTime"
-                label="修改日期"
-            ></el-table-column>
-            <el-table-column prop="remark" label="备注" width="100"></el-table-column>
+                label="修改日期"  width="100"
+             ></el-table-column>
+            <el-table-column
+                prop="remark"
+                label="备注"  width="100"
+             ></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button
-                        @click="editUser(scope.row.id)"
+                        @click="editProd(scope.row.id)"
                         type="text"
                         size="small"
                         >编辑</el-button
@@ -158,8 +200,8 @@ export default {
         console.log(this.createForm);
         return {
             titleMap: {
-                addUser: "新增用户",
-                editUser: "编辑用户信息",
+                addProd: "新增用户",
+                editProd: "编辑用户信息",
             },
             dialogStatus: "",
             displayForm: this.displayForm,
@@ -168,26 +210,26 @@ export default {
             pageSize: this.pageSize,
             pageNum: this.pageNum,
             selectForm: {
-                name: "",
-                account: "",
+                productionName: "",
+                productionType: "",
             },
             form: {
-                name: "",
-                account: "",
+                productionName: "",
+                productionType: "",
             },
             createForm: {
                 ...this.createForm,
             },
 
-            addUser: false,
+            addProd: false,
         };
     },
     methods: {
         handleSearch(form) {
             console.log("submit!");
-            this.$post("/user/getUserList", {
-                name: form.name,
-                account: form.account,
+            this.$post("/production/getProdList", {
+                productionName: form.productionName,
+                productionType: form.productionType,
                 pageNum: 1,
                 pageSize: 10,
             })
@@ -210,7 +252,7 @@ export default {
                 .catch((_) => {});
         },
         handleDelete(id) {
-            this.$post("/user/deleteUser", { id: id, pageNum: 1, pageSize: 10 })
+            this.$post("/production/deleteProd", { id: id, pageNum: 1, pageSize: 10 })
                 .then((res) => {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
@@ -221,27 +263,29 @@ export default {
                 });
         },
 
-        handleAddUser(flag) {
+        handleAddProd(flag) {
             if (flag) {
                 this.createForm = {};
-                (this.addUser = true), (this.dialogStatus = "addUser");
+                (this.addProd = true), (this.dialogStatus = "addProd");
             } else {
-                this.addUser = false;
+                this.addProd = false;
             }
         },
 
-        createUser(form, flag) {
-            if (flag === "addUser") {
-                this.$post("/user/insertUser", {
-                    name: form.name,
-                    account: form.account,
-                    password: form.password,
-                    sex: form.sex,
-                    mobilePhone: form.mobilePhone,
-                    mail: form.mail,
+        createProd(form, flag) {
+            if (flag === "addProd") {
+                this.$post("/production/insertProd", {
+                    productionName: form.productionName,
+                    productionType: form.productionType,
+                    size: form.size,
+                    pitch: form.pitch,
+                    pack: form.pack,
+                    frequency: form.frequency,
+                    color1: form.color1,
+                    color2: form.color2,
                 })
                     .then((res) => {
-                        this.addUser = false;
+                        this.addProd = false;
                         this.createForm = {};
                         this.displayForm = res.resultList;
                         this.totalpage = res.totalpage;
@@ -251,17 +295,19 @@ export default {
                         console.log(error);
                     });
             } else {
-                this.$post("/user/updateUser", {
+                this.$post("/production/updateProd", {
                     id: form.id,
-                    name: form.name,
-                    account: form.account,
-                    password: form.password,
-                    sex: form.sex,
-                    mobilePhone: form.mobilePhone,
-                    mail: form.mail,
+                     productionName: form.productionName,
+                    productionType: form.productionType,
+                    size: form.size,
+                    pitch: form.pitch,
+                    pack: form.pack,
+                    frequency: form.frequency,
+                    color1: form.color1,
+                    color2: form.color2,
                 })
                     .then((res) => {
-                        this.addUser = false;
+                        this.addProd = false;
                         this.createForm = {};
                         this.displayForm = res.resultList;
                         this.totalpage = res.totalpage;
@@ -272,11 +318,11 @@ export default {
                     });
             }
         },
-        editUser(id) {
-            this.dialogStatus = "editUser";
+        editProd(id) {
+            this.dialogStatus = "editProd";
             (this.createForm = {}),
-                (this.addUser = true),
-                this.$post("/user/getUserList", {
+                (this.addProd = true),
+                this.$post("/production/getProdList", {
                     id,
                 })
                     .then((res) => {
@@ -289,7 +335,7 @@ export default {
                     });
         },
         handleCurrentChange(val) {
-            this.$post("/user/getUserList", {
+            this.$post("/production/getProdList", {
                 pageNum: val,
                 pageSize: this.pageSize,
             })
@@ -306,7 +352,7 @@ export default {
                 });
         },
         handleSizeChange(val) {
-            this.$post("/user/getUserList", {
+            this.$post("/production/getProdList", {
                 pageNum: this.pageNum,
                 pageSize: val,
             })
@@ -324,7 +370,7 @@ export default {
         },
     },
     mounted() {
-        this.$post("/user/getUserList", { pageNum: 1, pageSize: 10 })
+        this.$post("/production/getProdList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;

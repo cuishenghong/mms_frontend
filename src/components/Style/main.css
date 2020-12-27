@@ -39,12 +39,12 @@
     border-radius: 4px;
 }
 .el-table th.is-leaf {
-    background-color: #50CBF5;
+    background-color: #50cbf5;
 }
 .el-table--border {
     border-radius: 10px;
 }
-.addUser {
+.add-button {
     float: right;
 }
 .el-dialog__title {
@@ -53,6 +53,7 @@
 }
 .detail-form {
     margin: 10px;
-    background-color:#FFFFFF;
+    background-color: #ffffff;
     padding: 34px;
 }
+ 

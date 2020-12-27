@@ -24,35 +24,50 @@
                     >查询</el-button
                 >
             </el-form-item>
-            <el-button
-                class="addInven"
-                type="success"
-                @click="handleAddInven('1')"
-                >新建库存</el-button
-            >
         </el-form>
-
+        <el-button
+            class="add-button"
+            type="success"
+            @click="handleAddInven('1')"
+            >新建库存</el-button
+        >
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column prop="productionId" label="产品编号">
             </el-table-column>
             <el-table-column prop="per" label="每套个数"> </el-table-column>
 
             <el-table-column prop="suite" label="套数"> </el-table-column>
-            <el-table-column
-                fixed
-                prop="createTime"
-                label="创建日期"
-                width="150"
-            >
-            </el-table-column>
-            <el-table-column prop="creator" label="创建人姓名">
-            </el-table-column>
-            <el-table-column prop="arrivalBatch" label="到货日期">
+
+            <el-table-column prop="arrivalBatch" label="到货批次" width="200">
             </el-table-column>
             <el-table-column prop="inventoryWarning" label="库存预警">
             </el-table-column>
-
-            <el-table-column fixed="right" label="操作">
+            <el-table-column
+                prop="creator"
+                label="创建人"
+                width="100"
+            ></el-table-column>
+            <el-table-column
+                prop="createTime"
+                label="创建日期"
+                width="100"
+            ></el-table-column>
+            <el-table-column
+                prop="modifier"
+                label="修改人"
+                width="100"
+            ></el-table-column>
+            <el-table-column
+                prop="updateTime"
+                label="修改日期"
+                width="100"
+            ></el-table-column>
+            <el-table-column
+                prop="remark"
+                label="备注"
+                width="100"
+            ></el-table-column>
+            <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button
                         @click="handleClick(scope.row)"
@@ -110,14 +125,14 @@
                                 v-model="createForm.suite"
                             ></el-input> </el-form-item
                     ></el-col>
-                 
-                <el-col :span="12"
+
+                    <el-col :span="12"
                         ><el-form-item label="创建人姓名">
                             <el-input
                                 v-model="createForm.creator"
                             ></el-input> </el-form-item
                     ></el-col>
-                  </el-row>
+                </el-row>
 
                 <el-form-item>
                     <el-button
@@ -182,13 +197,12 @@ export default {
                 });
         },
         handleAddInven(flag) {
-            if (flag) {
-                this.createForm = {};
-                (this.addInven = true), (this.dialogStatus = "addInven");
-            } else {
-                this.addInven = false;
-            }
+            this.$router.push({
+                name: "InventoryInfoAdd",
+                params: { flag: "addInven" },
+            });
         },
+
         createInven(form, flag) {
             if (flag === "addInven") {
                 this.$post("/inventory/insertInventory", {
@@ -196,7 +210,6 @@ export default {
                     suite: form.suite,
                     per: form.per,
                     creator: form.creator,
-                    
                 })
                     .then((res) => {
                         this.addInven = false;
@@ -229,20 +242,10 @@ export default {
             }
         },
         editInven(id) {
-            this.dialogStatus = "editInven";
-            (this.createForm = {}),
-                (this.addInven = true),
-                this.$post("/user/getUserList", {
-                    id,
-                })
-                    .then((res) => {
-                        this.createForm = res.resultList[0];
-                        this.totalpage = res.totalpage;
-                        this.totalCount = res.totalCount;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+            this.$router.push({
+                name: "InventoryInfoAdd",
+                params: { flag: "editInven", id },
+            });
         },
         handleClose(done) {
             this.$confirm("确认关闭？")
@@ -264,9 +267,8 @@ export default {
         },
 
         handleClick(row) {
-            // this.$router.push({ path: "/ProductionInfo" });
             this.$router.push({
-                name: "ProductionInfo",
+                name: "InventoryDetail",
                 params: { id: row.id },
             });
         },

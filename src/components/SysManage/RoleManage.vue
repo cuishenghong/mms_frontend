@@ -25,7 +25,7 @@
                 >
             </el-form-item>
         </el-form>
-        <el-button class="addUser" type="success" @click="handleAddRole('1')"
+        <el-button class="add-button" type="success" @click="handleAddRole('1')"
             >新增角色</el-button
         >
         <el-dialog
@@ -90,7 +90,7 @@
              ></el-table-column>
             <el-table-column
                 prop="roleDescription"
-                label="描述"
+                label="描述" width="200"
              ></el-table-column>
             <el-table-column fixed="right" label="操作" >
                 <template slot-scope="scope">

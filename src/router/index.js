@@ -2,10 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login/Login'
 import Main from '../components/main/main'
-import Inventory from '../components/Inventory/ProductionDetail'
-import NotFound from '../components/NotFound'
 import NavMenu from '../components/NavMenu/NavMenu'
-import ProductionInfo from '../components/ProductionInfo/ProductionInfo'
+import Inventory from '../components/Inventory/InventoryInfo'
+import InventoryDetail from '../components/Inventory/InventoryDetail'
+import InventoryInfoAdd from '../components/Inventory/InventoryInfoAdd'
+import NotFound from '../components/NotFound'
+
+import ProductionManage from '../components/ProductionManage/ProductionInfo'
+
 import UserManage from '../components/SysManage/UserManage'
 import RoleManage from '../components/SysManage/RoleManage'
 import PermManage from '../components/SysManage/PermManage'
@@ -34,6 +38,16 @@ export default new Router({
         keepalive:true
       }
     },
+    
+    {
+      path: '/NavMenu',
+      name: 'NavMenu',
+      component: NavMenu,
+      meta:{
+        keepalive:true
+      }
+    },
+
     {
       path: '/Inventory',
       name: 'Inventory',
@@ -43,17 +57,26 @@ export default new Router({
       }
     },
     {
-      path: '/NavMenu',
-      name: 'NavMenu',
-      component: NavMenu,
+      path: '/InventoryDetail',
+      name: 'InventoryDetail',
+      component: InventoryDetail,
       meta:{
         keepalive:true
       }
     },
     {
-      path: '/ProductionInfo',
-      name: 'ProductionInfo',
-      component: ProductionInfo,
+      path: '/InventoryInfoAdd',
+      name: 'InventoryInfoAdd',
+      component: InventoryInfoAdd,
+      meta:{
+        keepalive:true
+      }
+    },
+    
+    {
+      path: '/ProductionManage',
+      name: 'ProductionManage',
+      component: ProductionManage,
       meta:{
         keepalive:true
       }
