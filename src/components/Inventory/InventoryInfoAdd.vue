@@ -30,18 +30,37 @@
             type="success"
             @click="handleAddInven('1')"
             >新建库存</el-button
+        >         <el-button @click="setCurrent()">取消所选产品</el-button>
+
+        <el-table
+        ref="displayForm" 
+            :data="displayForm"
+            border
+            style="width: 100%"
+            highlight-current-row
+            @current-change="handleTableRowChange"
         >
-        <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column prop="productionId" label="产品编号">
+            <el-table-column fixed prop="productionName" label="商品名称">
             </el-table-column>
-            <el-table-column prop="per" label="每套个数"> </el-table-column>
-
-            <el-table-column prop="suite" label="套数"> </el-table-column>
-
-            <el-table-column prop="arrivalBatch" label="到货批次" width="200">
-            </el-table-column>
-            <el-table-column prop="inventoryWarning" label="库存预警">
-            </el-table-column>
+            <el-table-column prop="productionType" label="商品类型"
+                ><template slot-scope="scope">{{
+                    scope.row.sex === "1"
+                        ? "单碗"
+                        : scope.row.sex === "2"
+                        ? "套碗"
+                        : "透明碗"
+                }}</template></el-table-column
+            >
+            <el-table-column prop="frequency" label="频率"></el-table-column>
+            <el-table-column prop="sex" label="是否包"
+                ><template slot-scope="scope">{{
+                    scope.row.sex === "1" ? "是" : "否"
+                }}</template></el-table-column
+            >
+            <el-table-column prop="pitch" label="音调"></el-table-column>
+            <el-table-column prop="size" label="尺寸"></el-table-column>
+            <el-table-column prop="color1" label="颜色1"></el-table-column
+            ><el-table-column prop="color2" label="颜色2"></el-table-column>
             <el-table-column
                 prop="creator"
                 label="创建人"
@@ -62,28 +81,9 @@
                 label="修改日期"
                 width="100"
             ></el-table-column>
-            <el-table-column
-                prop="remark"
-                label="备注"
-                width="100"
-            ></el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
-                <template slot-scope="scope">
-                    <el-button
-                        @click="handleClick(scope.row)"
-                        type="text"
-                        size="small"
-                        >查看</el-button
-                    >
-                    <el-button
-                        @click="editInven(scope.row.id)"
-                        type="text"
-                        size="small"
-                        >编辑</el-button
-                    >
-                </template>
-            </el-table-column>
+          
         </el-table>
+
         <div class="block">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -283,6 +283,12 @@ export default {
                 params: { id: row.id },
             });
         },
+        handleTableRowChange(val) {
+            this.currentRow = val;
+        },
+        setCurrent(row) {
+            this.$refs.displayForm.setCurrentRow(row);
+        },
         handleCurrentChange(val) {
             this.$post("/inventory/getInventoryList", {
                 pageNum: val,
@@ -319,7 +325,7 @@ export default {
         },
     },
     mounted() {
-        this.$post("/inventory/getInventoryList", { pageNum: 1, pageSize: 10 })
+        this.$post("/production/getProdList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;

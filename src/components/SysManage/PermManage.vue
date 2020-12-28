@@ -25,9 +25,9 @@
                 >
             </el-form-item>
         </el-form>
-        <el-button class="add-button" type="success" @click="handleAdd('1')"
+         <el-button class="add-button" type="success" @click="handleAdd('1')"
             >新增权限</el-button
-        >
+  
         <el-dialog
             :title="titleMap[dialogStatus]"
             :visible.sync="add"
