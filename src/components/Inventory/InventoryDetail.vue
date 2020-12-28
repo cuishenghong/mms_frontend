@@ -1,7 +1,12 @@
 <template>
     <div class="main">
         <h1 class="header-title">{{ msg }}</h1>
-        <el-form ref="form" :model="form" label-width="80px" class="detail-form">
+        <el-form
+            ref="form"
+            :model="form"
+            label-width="80px"
+            class="detail-form"
+        >
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="商品Id">
@@ -87,17 +92,18 @@ export default {
         },
     },
     mounted() {
-        this.$post("/production/getProdInfo", { id: this.$route.params.id })
-            .then((res) => {
-                this.code = res.code;
-                this.form = res.prodInfo;
-                console.log(this.form);
-                // 业务代码
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if (this.$route.params.id) {
+            this.$post("/production/getProdInfo", { id: this.$route.params.id })
+                .then((res) => {
+                    this.code = res.code;
+                    this.form = res.prodInfo;
+                    console.log(this.form);
+                    // 业务代码
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     },
 };
 </script>
-

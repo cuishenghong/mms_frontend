@@ -26,8 +26,10 @@
                     >
                 </el-form-item>
             </el-form>
-         
-            <el-button class="float-left" @click="setCurrent()">取消所选产品</el-button>
+
+            <el-button class="float-left" @click="setCurrent()"
+                >取消所选产品</el-button
+            >
 
             <el-table
                 ref="displayForm"
@@ -79,77 +81,48 @@
                 </el-pagination>
             </div>
 
-             <el-form ref="createForm" :model="createForm" label-width="80px">
+            <el-form ref="createForm" :model="createForm" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="12"
-                        ><el-form-item label="商品名称">
+                        ><el-form-item label="到货批次">
                             <el-input
-                                v-model="createForm.productionName"
+                                v-model="createForm.arrivalBatch"
                             ></el-input> </el-form-item
                     ></el-col>
+
                     <el-col :span="12"
-                        ><el-form-item label="商品种类">
-                            <el-select
-                                v-model="createForm.productionType"
-                                placeholder="商品种类"
-                                ><el-option
-                                    label="透明碗"
-                                    value="3"
-                                ></el-option>
-                                <el-option label="套碗" value="2"></el-option>
-                                <el-option label="单碗" value="1"></el-option>
-                            </el-select> </el-form-item
-                    ></el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="12"
-                        ><el-form-item label="频率">
+                        ><el-form-item label="每套个数">
                             <el-input
-                                v-model="createForm.frequency"
+                                v-model="createForm.per"
                             ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="是否包">
-                            <el-select
-                                v-model="createForm.pack"
-                                placeholder="是否包"
-                            >
-                                <el-option label="否" value="2"></el-option>
-                                <el-option label="是" value="1"></el-option>
-                            </el-select> </el-form-item
                     ></el-col>
                 </el-row>
                 <el-row :gutter="20"
                     ><el-col :span="12"
-                        ><el-form-item label="音调">
+                        ><el-form-item label="套数">
                             <el-input
-                                v-model="createForm.pitch"
+                                v-model="createForm.suite"
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
-                        ><el-form-item label="尺寸">
-                            <el-input
-                                v-model="createForm.size"
-                            ></el-input> </el-form-item></el-col
+                        ><el-form-item label="库存预警">
+                            <el-select
+                                v-model="createForm.inventoryWarning"
+                                placeholder="库存预警"
+                                ><el-option
+                                    label="库存不足"
+                                    value="3"
+                                ></el-option>
+                                <el-option label="预警" value="2"></el-option>
+                                <el-option label="正常" value="1"></el-option>
+                            </el-select> </el-form-item></el-col
                 ></el-row>
 
-                <el-row :gutter="20">
-                    <el-col :span="12"
-                        ><el-form-item label="颜色1">
-                            <el-input
-                                v-model="createForm.color1"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="颜色2">
-                            <el-input
-                                v-model="createForm.color2"
-                            ></el-input> </el-form-item></el-col
-                ></el-row>
                 <el-form-item>
                     <el-button
                         type="primary"
-                        @click="createProd(createForm, dialogStatus)"
+                        @click="handleCreate(createForm)"
+                        :disabled="disabled"
                     >
                         创建
                     </el-button>
@@ -166,7 +139,6 @@ export default {
         var pageSize = 10;
         var pageNum = 1;
         return {
-            dialogStatus: "",
             displayForm: this.displayForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
@@ -183,8 +155,10 @@ export default {
             createForm: {
                 ...this.createForm,
             },
-
             addInven: false,
+
+            selectedProdId: "",
+            disabled: true,
         };
     },
     methods: {
@@ -204,20 +178,66 @@ export default {
                     console.log(error);
                 });
         },
-        handleAddInven(flag) {
-            if (flag) {
-                this.createForm = {};
-                (this.addInven = true), (this.dialogStatus = "addInven");
+        handleAddProd() {
+            this.$router.push({
+                name: "Inventory",
+            });
+        },
+        handleCreate(form) {
+            if (!this.$route.params.id) {
+                this.$post("/inventory/insertInventory", {
+                    productionId: this.selectedProdId,
+                    arrivalBatch: form.arrivalBatch,
+                    per: form.per,
+                    suite: form.suite,
+                    inventoryWarning: form.inventoryWarning,
+                })
+                    .then((res) => {
+                        this.$router.push({
+                            name: "Inventory",
+                        });
+                        this.addProd = false;
+                        this.createForm = {};
+                        this.displayForm = res.resultList;
+                        this.totalpage = res.totalpage;
+                        this.totalCount = res.totalCount;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             } else {
-                this.addInven = false;
+                this.$post("/inventory/updateInventory", {
+                    id: this.$route.params.id,
+                    productionId: this.selectedProdId,
+                    arrivalBatch: form.arrivalBatch,
+                    per: form.per,
+                    suite: form.suite,
+                    inventoryWarning: form.inventoryWarning,
+                })
+                    .then((res) => {
+                        this.$router.push({
+                            name: "Inventory",
+                        });
+                        this.addProd = false;
+                        this.createForm = {};
+                        this.displayForm = res.resultList;
+                        this.totalpage = res.totalpage;
+                        this.totalCount = res.totalCount;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
         },
-
         handleTableRowChange(val) {
             this.currentRow = val;
+            this.selectedProdId = val.id;
+            this.disabled = false;
         },
         setCurrent(row) {
             this.$refs.displayForm.setCurrentRow(row);
+            this.selectedProdId = "";
+            this.disabled = true;
         },
         handleCurrentChange(val) {
             this.$post("/production/getProdList", {
@@ -253,6 +273,18 @@ export default {
         },
     },
     mounted() {
+        if (this.$route.params.id) {
+            this.$post("/inventory/getInventoryList", {
+                id: this.$route.params.id,
+            })
+                .then((res) => {
+                    this.createForm = res.resultList[0];
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
         this.$post("/production/getProdList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;

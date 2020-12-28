@@ -37,7 +37,7 @@
             <el-form ref="createForm" :model="createForm" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="12"
-                        ><el-form-item label="用户姓名" >
+                        ><el-form-item label="用户姓名">
                             <el-input
                                 v-model="createForm.name"
                             ></el-input> </el-form-item
@@ -94,8 +94,16 @@
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column fixed prop="name" label="用户名" width="150">
             </el-table-column>
-            <el-table-column prop="account" label="账号" width="100"></el-table-column>
-            <el-table-column prop="alias" label="昵称" width="100"></el-table-column>
+            <el-table-column
+                prop="account"
+                label="账号"
+                width="100"
+            ></el-table-column>
+            <el-table-column
+                prop="alias"
+                label="昵称"
+                width="100"
+            ></el-table-column>
             <el-table-column prop="sex" label="性别"
                 ><template slot-scope="scope">{{
                     scope.row.sex === "1" ? "男" : "女"
@@ -103,21 +111,44 @@
             >
             <el-table-column
                 prop="mobilePhone"
-                label="手机号"  width="200"
+                label="手机号"
+                width="200"
             ></el-table-column>
-            <el-table-column prop="mail" label="邮箱"  width="200"></el-table-column>
-            <el-table-column prop="slogan" label="标语"  width="200"></el-table-column>
-            <el-table-column prop="creator" label="创建人" width="100"></el-table-column>
+            <el-table-column
+                prop="mail"
+                label="邮箱"
+                width="200"
+            ></el-table-column>
+            <el-table-column
+                prop="slogan"
+                label="标语"
+                width="200"
+            ></el-table-column>
+            <el-table-column
+                prop="creator"
+                label="创建人"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="createTime"
-                label="创建日期" width="150"
+                label="创建日期"
+                width="150"
             ></el-table-column>
-            <el-table-column prop="modifier" label="修改人" width="100"></el-table-column>
+            <el-table-column
+                prop="modifier"
+                label="修改人"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="updateTime"
-                label="修改日期" width="150"
+                label="修改日期"
+                width="150"
             ></el-table-column>
-            <el-table-column prop="remark" label="备注" width="100"></el-table-column>
+            <el-table-column
+                prop="remark"
+                label="备注"
+                width="100"
+            ></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button
@@ -195,8 +226,6 @@ export default {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
-
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -299,7 +328,6 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
                     this.pageSize = this.pageSize;
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -316,7 +344,6 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -329,8 +356,6 @@ export default {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
-
-                // 业务代码
             })
             .catch(function (error) {
                 console.log(error);
@@ -338,5 +363,3 @@ export default {
     },
 };
 </script>
-
- 

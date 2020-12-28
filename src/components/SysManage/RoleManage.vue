@@ -54,11 +54,14 @@
                         ><el-form-item label="描述">
                             <el-input
                                 v-model="createForm.roleDescription"
-                            ></el-input> </el-form-item
-                    ></el-col></el-row>
+                            ></el-input> </el-form-item></el-col
+                ></el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="createRole(createForm,dialogStatus)">
+                    <el-button
+                        type="primary"
+                        @click="createRole(createForm, dialogStatus)"
+                    >
                         创建
                     </el-button>
                     <el-button @click="handleAddRole(false)">取消</el-button>
@@ -68,31 +71,23 @@
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column fixed prop="roleName" label="角色名称" width="150">
             </el-table-column>
-            <el-table-column
-                prop="roleCode"
-                label="角色编码"
-             ></el-table-column>
-            <el-table-column
-                prop="creator"
-                label="创建人"
-             ></el-table-column>
+            <el-table-column prop="roleCode" label="角色编码"></el-table-column>
+            <el-table-column prop="creator" label="创建人"></el-table-column>
             <el-table-column
                 prop="createTime"
                 label="创建日期"
-             ></el-table-column>
-            <el-table-column
-                prop="modifier"
-                label="修改人"
-             ></el-table-column>
+            ></el-table-column>
+            <el-table-column prop="modifier" label="修改人"></el-table-column>
             <el-table-column
                 prop="updateTime"
                 label="修改日期"
-             ></el-table-column>
+            ></el-table-column>
             <el-table-column
                 prop="roleDescription"
-                label="描述" width="200"
-             ></el-table-column>
-            <el-table-column fixed="right" label="操作" >
+                label="描述"
+                width="200"
+            ></el-table-column>
+            <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
                     <el-button
                         @click="editRole(scope.row.id)"
@@ -158,7 +153,7 @@ export default {
     },
     methods: {
         handleSearch(form) {
-             this.$post("/role/getRoleList", {
+            this.$post("/role/getRoleList", {
                 name: form.name,
                 account: form.account,
                 pageNum: 1,
@@ -168,8 +163,6 @@ export default {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
-
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -195,7 +188,7 @@ export default {
         },
 
         handleAddRole(flag) {
-            if (flag) { 
+            if (flag) {
                 this.createForm = {};
                 (this.addUser = true), (this.dialogStatus = "addRole");
             } else {
@@ -203,48 +196,46 @@ export default {
             }
         },
 
-        createRole(form,flag) {
-            if(flag === "addRole"){
+        createRole(form, flag) {
+            if (flag === "addRole") {
                 this.$post("/role/insertRole", {
-                roleName: form.roleName,
-                roleCode: form.roleCode,
-                roleDescription: form.roleDescription,
-            })
-                .then((res) => {
-                    this.addUser = false;
-                    this.createForm = {};
-                    this.displayForm = res.resultList;
-                    this.totalpage = res.totalpage;
-                    this.totalCount = res.totalCount;
+                    roleName: form.roleName,
+                    roleCode: form.roleCode,
+                    roleDescription: form.roleDescription,
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            }else{
+                    .then((res) => {
+                        this.addUser = false;
+                        this.createForm = {};
+                        this.displayForm = res.resultList;
+                        this.totalpage = res.totalpage;
+                        this.totalCount = res.totalCount;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            } else {
                 this.$post("/role/updateRole", {
-                id:form.id,
-                roleName: form.roleName,
-                roleCode: form.roleCode,
-                roleDescription: form.roleDescription,
-               
-            })
-                .then((res) => {
-                    this.addUser = false;
-                    this.createForm = {};
-                    this.displayForm = res.resultList;
-                    this.totalpage = res.totalpage;
-                    this.totalCount = res.totalCount;
+                    id: form.id,
+                    roleName: form.roleName,
+                    roleCode: form.roleCode,
+                    roleDescription: form.roleDescription,
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                    .then((res) => {
+                        this.addUser = false;
+                        this.createForm = {};
+                        this.displayForm = res.resultList;
+                        this.totalpage = res.totalpage;
+                        this.totalCount = res.totalCount;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
-            
         },
         editRole(id) {
             this.dialogStatus = "editRole";
-            this.createForm = {},
-            (this.addUser = true),
+            (this.createForm = {}),
+                (this.addUser = true),
                 this.$post("/role/getRoleList", {
                     id,
                 })
@@ -268,7 +259,6 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
                     this.pageSize = this.pageSize;
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -285,7 +275,6 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                    // 业务代码
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -298,8 +287,6 @@ export default {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
-
-                // 业务代码
             })
             .catch(function (error) {
                 console.log(error);
@@ -307,4 +294,3 @@ export default {
     },
 };
 </script>
- 

@@ -143,8 +143,7 @@ export default {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
-
-                    // 业务代码
+ 
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -219,8 +218,7 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
                     this.pageSize = this.pageSize;
-                    // 业务代码
-                })
+                 })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -236,8 +234,7 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                    // 业务代码
-                })
+                 })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -249,8 +246,7 @@ export default {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
-
-                // 业务代码
+ 
             })
             .catch(function (error) {
                 console.log(error);
