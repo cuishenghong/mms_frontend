@@ -6,16 +6,16 @@
             class="demo-form-inline"
             style="line-height: 80px !important"
         >
-            <el-form-item label="产品编号">
+            <el-form-item label="产品名称">
                 <el-input
-                    v-model="selectForm.productionId"
-                    placeholder="产品编号"
+                    v-model="selectForm.productionName"
+                    placeholder="产品名称"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="创建人姓名">
+            <el-form-item label="产品类型">
                 <el-input
-                    v-model="selectForm.creator"
-                    placeholder="创建人姓名"
+                    v-model="selectForm.productionType"
+                    placeholder="产品类型"
                 ></el-input>
             </el-form-item>
 
@@ -32,12 +32,12 @@
             >新建库存</el-button
         >
         <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column prop="productionId" label="产品编号">
+            <el-table-column prop="productionName" label="产品名称">
+            </el-table-column>
+            <el-table-column prop="productionType" label="产品类型">
             </el-table-column>
             <el-table-column prop="per" label="每套个数"> </el-table-column>
-
             <el-table-column prop="suite" label="套数"> </el-table-column>
-
             <el-table-column prop="arrivalBatch" label="到货批次" width="200">
             </el-table-column>
             <el-table-column prop="inventoryWarning" label="库存预警">
@@ -96,55 +96,7 @@
             >
             </el-pagination>
         </div>
-
-        <el-dialog
-            :title="titleMap[dialogStatus]"
-            :visible.sync="addInven"
-            width="60%"
-            :before-close="handleClose"
-        >
-            <el-form ref="createForm" :model="createForm" label-width="80px">
-                <el-row :gutter="20">
-                    <el-col :span="12"
-                        ><el-form-item label="产品编号">
-                            <el-input
-                                v-model="createForm.productionId"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="每套个数">
-                            <el-input
-                                v-model="createForm.per"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                </el-row>
-                <el-row :gutter="20"
-                    ><el-col :span="12"
-                        ><el-form-item label="套数">
-                            <el-input
-                                v-model="createForm.suite"
-                            ></el-input> </el-form-item
-                    ></el-col>
-
-                    <el-col :span="12"
-                        ><el-form-item label="创建人姓名">
-                            <el-input
-                                v-model="createForm.creator"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                </el-row>
-
-                <el-form-item>
-                    <el-button
-                        type="primary"
-                        @click="createInven(createForm, dialogStatus)"
-                    >
-                        创建
-                    </el-button>
-                    <el-button @click="handleAddInven(false)">取消</el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+ 
     </div>
 </template>
 
@@ -154,10 +106,7 @@ export default {
         var pageSize = 10;
         var pageNum = 1;
         return {
-            titleMap: {
-                addInven: "新增库存",
-                editInven: "编辑库存信息",
-            },
+           
             dialogStatus: "",
             displayForm: this.displayForm,
             totalpage: this.totalpage,
@@ -172,12 +121,7 @@ export default {
                 name: "",
                 account: "",
             },
-            createForm: {
-                ...this.createForm,
-            },
-
-            addInven: false,
-        };
+         };
     },
     methods: {
         handleSearch(form) {
@@ -201,45 +145,6 @@ export default {
                 name: "InventoryInfoAdd",
                 params: { flag: "addInven" },
             });
-        },
-
-        createInven(form, flag) {
-            if (flag === "addInven") {
-                this.$post("/inventory/insertInventory", {
-                    productionId: form.productionId,
-                    suite: form.suite,
-                    per: form.per,
-                    creator: form.creator,
-                })
-                    .then((res) => {
-                        this.addInven = false;
-                        this.createForm = {};
-                        this.displayForm = res.resultList;
-                        this.totalpage = res.totalpage;
-                        this.totalCount = res.totalCount;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            } else {
-                this.$post("/user/updateUser", {
-                    id: form.id,
-                    productionId: form.productionId,
-                    suite: form.suite,
-                    per: form.per,
-                    creator: form.creator,
-                })
-                    .then((res) => {
-                        this.addInven = false;
-                        this.createForm = {};
-                        this.displayForm = res.resultList;
-                        this.totalpage = res.totalpage;
-                        this.totalCount = res.totalCount;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
         },
         editInven(id) {
             this.$router.push({

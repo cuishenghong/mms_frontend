@@ -25,7 +25,7 @@
                 >
             </el-form-item>
         </el-form>
-        <el-button class="addUser" type="success" @click="handleAddUser('1')"
+        <el-button class="add-butto" type="success" @click="handleAddUser('1')"
             >新增用户</el-button
         >
         <el-dialog
