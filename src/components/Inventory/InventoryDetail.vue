@@ -85,18 +85,17 @@ export default {
             form: this.form,
         };
     },
-    methods: {
-        handleClick(row) {
-            this.$router.push({ path: "/HelloWorld" });
-            console.log(row);
-        },
-    },
+  
     mounted() {
-        if (this.$route.params.id) {
-            this.$post("/production/getProdInfo", { id: this.$route.params.id })
+        console.log("******");
+        console.log(this.$route.params.id);
+        console.log("******");
+
+        if (this && this.$route && this.$route.params && this.$route.params.id) {
+            this.$post("/inventory/getInventoryList", { id: this.$route.params.id })
                 .then((res) => {
                     this.code = res.code;
-                    this.form = res.prodInfo;
+                    this.form = res.resultList[0];
                     console.log(this.form);
                     // 业务代码
                 })

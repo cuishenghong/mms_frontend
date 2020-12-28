@@ -197,8 +197,7 @@ export default {
     data() {
         var pageSize = 10;
         var pageNum = 1;
-        console.log(this.createForm);
-        return {
+         return {
             titleMap: {
                 addProd: "新增用户",
                 editProd: "编辑用户信息",
