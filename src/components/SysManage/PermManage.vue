@@ -6,16 +6,16 @@
             class="demo-form-inline"
             style="line-height: 80px !important"
         >
-            <el-form-item label="用户名">
+            <el-form-item label="权限名称">
                 <el-input
-                    v-model="selectForm.name"
-                    placeholder="用户名"
+                    v-model="selectForm.permissonName"
+                    placeholder="权限名称"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="账号">
+            <el-form-item label="描述">
                 <el-input
-                    v-model="selectForm.account"
-                    placeholder="账号"
+                    v-model="selectForm.remark"
+                    placeholder="描述"
                 ></el-input>
             </el-form-item>
 
@@ -25,137 +25,51 @@
                 >
             </el-form-item>
         </el-form>
-        <el-button class="addUser" type="success" @click="handleAddUser('1')"
-            >新增用户</el-button
+        <el-button class="add-button" type="success" @click="handleAdd('1')"
+            >新增权限</el-button
         >
         <el-dialog
             :title="titleMap[dialogStatus]"
-            :visible.sync="addUser"
+            :visible.sync="add"
             width="60%"
             :before-close="handleClose"
         >
             <el-form ref="createForm" :model="createForm" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="12"
-                        ><el-form-item label="用户姓名">
+                        ><el-form-item label="权限名称">
                             <el-input
-                                v-model="createForm.name"
+                                v-model="createForm.permissonName"
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
-                        ><el-form-item label="用户账号">
+                        ><el-form-item label="描述">
                             <el-input
-                                v-model="createForm.account"
+                                v-model="createForm.remark"
                             ></el-input> </el-form-item
                     ></el-col>
                 </el-row>
-                <el-row :gutter="20"
-                    ><el-col :span="12"
-                        ><el-form-item label="用户密码">
-                            <el-input
-                                v-model="createForm.password"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="性别">
-                            <el-select
-                                v-model="createForm.sex"
-                                placeholder="请选择性别"
-                            >
-                                <el-option label="女" value="2"></el-option>
-                                <el-option label="男" value="1"></el-option>
-                            </el-select> </el-form-item></el-col
-                ></el-row>
-                <el-row :gutter="20"
-                    ><el-col :span="12"
-                        ><el-form-item label="手机号">
-                            <el-input
-                                v-model="createForm.mobilePhone"
-                            ></el-input> </el-form-item
-                    ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="邮箱">
-                            <el-input
-                                v-model="createForm.mail"
-                            ></el-input> </el-form-item></el-col
-                ></el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="createUser(createForm)">
+                    <el-button type="primary" @click="create(createForm)">
                         创建
                     </el-button>
-                    <el-button @click="handleAddUser(false)">取消</el-button>
+                    <el-button @click="handleAdd(false)">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
         <el-table :data="tableData" border style="width: 100%">
-            <el-table-column fixed prop="name" label="用户名" width="150">
+            <el-table-column fixed prop="permissonName" label="权限名称" width="250">
             </el-table-column>
             <el-table-column
-                prop="account"
-                label="账号"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="alias"
-                label="昵称"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="sex"
-                label="性别"
-                width="80"
-            ></el-table-column>
-            <el-table-column
-                prop="mobilePhone"
-                label="手机号"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="mail"
-                label="邮箱"
-                width="200"
-            ></el-table-column>
-            <el-table-column
-                prop="slogan"
-                label="标语"
-                width="200"
-            ></el-table-column>
-            <el-table-column
-                prop="creator"
-                label="创建人"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="createTime"
-                label="创建日期"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="modifier"
-                label="修改人"
-                width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="updateTime"
-                label="修改日期"
-                width="120"
-            ></el-table-column>
-            <el-table-column
                 prop="remark"
-                label="备注"
-                width="120"
+                label="描述"
+                width="320"
             ></el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="操作" width="200">
                 <template slot-scope="scope">
-                    <!-- <el-button
-                        @click="handleClick(scope.row)"
-                        type="primary"
-                        size="small"
-                        >查看</el-button
-                    > -->
                     <el-button
-                        @click="editUser(scope.row.id)"
+                        @click="edit(scope.row.id)"
                         type="text"
                         size="small"
                         >编辑</el-button
@@ -192,8 +106,8 @@ export default {
         console.log(this.createForm);
         return {
             titleMap: {
-                addEquipment: "新增设备",
-                editEquipment: "编辑设备",
+                add: "新增权限",
+                edit: "编辑权限",
             },
             dialogStatus: "",
             tableData: this.tableData,
@@ -202,26 +116,26 @@ export default {
             pageSize: this.pageSize,
             pageNum: this.pageNum,
             selectForm: {
-                name: "",
-                account: "",
+                permissonName: "",
+                remark: "",
             },
             form: {
-                name: "",
-                account: "",
+                permissonName: "",
+                remark: "",
             },
             createForm: {
                 ...this.createForm,
             },
 
-            addUser: false,
+            add: false,
         };
     },
     methods: {
         handleSearch(form) {
             console.log("submit!");
-            this.$post("/user/getUserList", {
-                name: form.name,
-                account: form.account,
+            this.$post("/permission/getPermissionList", {
+                permissonName: form.permissonName,
+                remark: form.remark,
                 pageNum: 1,
                 pageSize: 10,
             })
@@ -244,7 +158,7 @@ export default {
                 .catch((_) => {});
         },
         handleDelete(id) {
-            this.$post("/user/deleteUser", { id: id, pageNum: 1, pageSize: 10 })
+            this.$post("/permission/deletePermission", { id: id, pageNum: 1, pageSize: 10 })
                 .then((res) => {
                     this.tableData = res.resultList;
                     this.totalpage = res.totalpage;
@@ -255,25 +169,21 @@ export default {
                 });
         },
 
-        handleAddUser(flag) {
+        handleAdd(flag) {
             if (flag) { this.createForm = {};
-                (this.addUser = true), (this.dialogStatus = "addEquipment");
+                (this.add = true), (this.dialogStatus = "add");
             } else {
-                this.addUser = false;
+                this.add = false;
             }
         },
 
-        createUser(form) {
-            this.$post("/user/insertUser", {
-                name: form.name,
-                account: form.account,
-                password: form.password,
-                sex: form.sex,
-                mobilePhone: form.mobilePhone,
-                mail: form.mail,
+        create(form) {
+            this.$post("/permission/insertPermission", {
+                permissonName: form.permissonName,
+                remark: form.remark,
             })
                 .then((res) => {
-                    this.addUser = false;
+                    this.add = false;
                     this.createForm = {};
                     this.tableData = res.resultList;
                     this.totalpage = res.totalpage;
@@ -283,10 +193,10 @@ export default {
                     console.log(error);
                 });
         },
-        editUser(id) {
-            this.dialogStatus = "editEquipment";
-            (this.addUser = true),
-                this.$post("/user/getUserList", {
+        edit(id) {
+            this.dialogStatus = "edit";
+            (this.add = true),
+                this.$post("/permission/getPermissionList", {
                     id,
                 })
                     .then((res) => {
@@ -299,7 +209,7 @@ export default {
                     });
         },
         handleCurrentChange(val) {
-            this.$post("/perm/getPermList", {
+            this.$post("/permission/getPermissionList", {
                 pageNum: val,
                 pageSize: this.pageSize,
             })
@@ -316,7 +226,7 @@ export default {
                 });
         },
         handleSizeChange(val) {
-            this.$post("/perm/getPermList", {
+            this.$post("/permission/getPermissionList", {
                 pageNum: this.pageNum,
                 pageSize: val,
             })
@@ -334,7 +244,7 @@ export default {
         },
     },
     mounted() {
-        this.$post("/user/getUserList", { pageNum: 1, pageSize: 10 })
+        this.$post("/permission/getPermissionList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.tableData = res.resultList;
                 this.totalpage = res.totalpage;
