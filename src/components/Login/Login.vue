@@ -71,15 +71,3 @@ export default {
 };
 </script>
 
-<style>
-.login {
-    margin-top: 200px;
-}
-.input_style {
-    width: 200px;
-    margin-bottom: 10px;
-}
-.login_style {
-    width: 200px;
-}
-</style>

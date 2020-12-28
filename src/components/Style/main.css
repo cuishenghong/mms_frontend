@@ -1,12 +1,27 @@
+.login {
+    margin-top: 200px;
+}
+.input_style {
+    width: 200px;
+    margin-bottom: 10px;
+}
+.login_style {
+    width: 200px;
+}
 .main {
     font-size: 30px;
     color: #000000;
     max-width: 1250px;
     width: 80%;
     margin: 0 auto;
+    border: #000000;
 }
-.header-title {
-    margin: 0px;
+.main .el-form--inline .el-form-item__label {
+    float: left;
+}
+
+.main .el-table td {
+    padding: 0px 0px;
 }
 .el-row {
     margin-bottom: 20px;
@@ -14,9 +29,11 @@
         margin-bottom: 0;
     }
 }
+
 .el-col {
     border-radius: 4px;
 }
+
 .bg-purple-dark {
     background: #99a9bf;
 }
@@ -34,16 +51,22 @@
     padding: 10px 0;
     background-color: #f9fafc;
 }
-.el-table tr {
-    line-height: 0;
-    border-radius: 4px;
+
+.header-title {
+    margin: 0px;
 }
+
+.el-table tr {
+    border-radius: 4px;
+ }
 .el-table th.is-leaf {
     background-color: #50cbf5;
+    line-height: 2;
 }
 .el-table--border {
     border-radius: 10px;
 }
+
 .add-button {
     float: right;
 }
@@ -56,4 +79,12 @@
     background-color: #ffffff;
     padding: 34px;
 }
- 
+.container-submit {
+    border: solid 1px firebrick;
+    padding: 30px;
+    border-radius: 10px;
+    line-height: 51px;
+}
+.float-left{
+    float: left;
+}

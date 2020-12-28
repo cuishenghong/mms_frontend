@@ -34,8 +34,17 @@
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column prop="productionName" label="产品名称">
             </el-table-column>
-            <el-table-column prop="productionType" label="产品类型">
-            </el-table-column>
+
+            <el-table-column prop="productionType" label="商品类型">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.productionType === '1'">单碗</div>
+                    <div v-else-if="scope.row.productionType === '2'">套碗</div>
+                    <div v-else-if="scope.row.productionType === '3'">
+                        透明碗
+                    </div>
+                    <div v-else>单碗</div>
+                </template>
+            </el-table-column>            </el-table-column>
             <el-table-column prop="per" label="每套个数"> </el-table-column>
             <el-table-column prop="suite" label="套数"> </el-table-column>
             <el-table-column prop="arrivalBatch" label="到货批次" width="200">
@@ -50,7 +59,7 @@
             <el-table-column
                 prop="createTime"
                 label="创建日期"
-                width="100"
+                width="150"
             ></el-table-column>
             <el-table-column
                 prop="modifier"
@@ -96,8 +105,8 @@
             >
             </el-pagination>
         </div>
- 
-    </div>
+    
+    </div> 
 </template>
 
 <script>
@@ -107,8 +116,7 @@ export default {
         var pageNum = 1;
         return {
            
-            dialogStatus: "",
-            displayForm: this.displayForm,
+             displayForm: this.displayForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -183,7 +191,7 @@ export default {
                 pageSize: this.pageSize,
             })
                 .then((res) => {
-                    this.selectForm = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
@@ -200,13 +208,12 @@ export default {
                 pageSize: val,
             })
                 .then((res) => {
-                    this.selectForm = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                    // 业务代码
-                })
+                 })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -218,8 +225,7 @@ export default {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
-
-                // 业务代码
+ 
             })
             .catch(function (error) {
                 console.log(error);
@@ -227,43 +233,3 @@ export default {
     },
 };
 </script>
-<style>
-.el-form--inline .el-form-item__label {
-    float: left;
-}
-
-.main {
-    font-size: 30px;
-    color: #000000;
-    border: #000000;
-}
-.header-title {
-    margin: 0px;
-}
-.el-row {
-    margin-bottom: 20px;
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-.el-col {
-    border-radius: 4px;
-}
-.bg-purple-dark {
-    background: #99a9bf;
-}
-.bg-purple {
-    background: #d3dce6;
-}
-.bg-purple-light {
-    background: #e5e9f2;
-}
-.grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-}
-.row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-}
-</style>

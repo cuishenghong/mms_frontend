@@ -115,51 +115,51 @@
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column fixed prop="productionName" label="商品名称">
             </el-table-column>
-            <el-table-column prop="productionType" label="商品类型"
-                ><template slot-scope="scope">{{
-                    scope.row.sex === "1"
-                        ? "单碗"
-                        : scope.row.sex === "2"
-                        ? "套碗"
-                        : "透明碗"
-                }}</template></el-table-column
-            >
+            <el-table-column prop="productionType" label="商品类型">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.productionType === '1'">单碗</div>
+                    <div v-else-if="scope.row.productionType === '2'">套碗</div>
+                    <div v-else-if="scope.row.productionType === '3'">
+                        透明碗
+                    </div>
+                    <div v-else>单碗</div>
+                </template>
+            </el-table-column>
             <el-table-column prop="frequency" label="频率"></el-table-column>
-            <el-table-column prop="sex" label="是否包"
+            <el-table-column prop="pack" label="是否包"
                 ><template slot-scope="scope">{{
-                    scope.row.sex === "1" ? "是" : "否"
+                    scope.row.pack === "1" ? "是" : "否"
                 }}</template></el-table-column
             >
             <el-table-column prop="pitch" label="音调"></el-table-column>
             <el-table-column prop="size" label="尺寸"></el-table-column>
-            <el-table-column
-                prop="color1"
-                label="颜色1"
-             ></el-table-column
-            ><el-table-column
-                prop="color2"
-                label="颜色2"
-             ></el-table-column>
+            <el-table-column prop="color1" label="颜色1"></el-table-column
+            ><el-table-column prop="color2" label="颜色2"></el-table-column>
             <el-table-column
                 prop="creator"
-                label="创建人"  width="100"
-             ></el-table-column>
+                label="创建人"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="createTime"
-                label="创建日期"  width="100"
-             ></el-table-column>
+                label="创建日期"
+                width="150"
+            ></el-table-column>
             <el-table-column
                 prop="modifier"
-                label="修改人"  width="100"
-             ></el-table-column>
+                label="修改人"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="updateTime"
-                label="修改日期"  width="100"
-             ></el-table-column>
+                label="修改日期"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="remark"
-                label="备注"  width="100"
-             ></el-table-column>
+                label="备注"
+                width="100"
+            ></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button
@@ -252,7 +252,11 @@ export default {
                 .catch((_) => {});
         },
         handleDelete(id) {
-            this.$post("/production/deleteProd", { id: id, pageNum: 1, pageSize: 10 })
+            this.$post("/production/deleteProd", {
+                id: id,
+                pageNum: 1,
+                pageSize: 10,
+            })
                 .then((res) => {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
@@ -297,7 +301,7 @@ export default {
             } else {
                 this.$post("/production/updateProd", {
                     id: form.id,
-                     productionName: form.productionName,
+                    productionName: form.productionName,
                     productionType: form.productionType,
                     size: form.size,
                     pitch: form.pitch,
@@ -340,7 +344,7 @@ export default {
                 pageSize: this.pageSize,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
@@ -357,7 +361,7 @@ export default {
                 pageSize: val,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
@@ -384,44 +388,3 @@ export default {
     },
 };
 </script>
-
-<style>
-.el-form--inline .el-form-item__label {
-    float: left;
-}
-
-.main {
-    font-size: 30px;
-    color: #000000;
-    border: #000000;
-}
-.header-title {
-    margin: 0px;
-}
-.el-row {
-    margin-bottom: 20px;
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-.el-col {
-    border-radius: 4px;
-}
-.bg-purple-dark {
-    background: #99a9bf;
-}
-.bg-purple {
-    background: #d3dce6;
-}
-.bg-purple-light {
-    background: #e5e9f2;
-}
-.grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-}
-.row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-}
-</style>

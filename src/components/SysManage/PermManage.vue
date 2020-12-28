@@ -58,7 +58,7 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table :data="displayForm" border style="width: 100%">
             <el-table-column fixed prop="permissonName" label="权限名称" width="250">
             </el-table-column>
             <el-table-column
@@ -110,7 +110,7 @@ export default {
                 edit: "编辑权限",
             },
             dialogStatus: "",
-            tableData: this.tableData,
+            displayForm: this.displayForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -140,7 +140,7 @@ export default {
                 pageSize: 10,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
 
@@ -160,7 +160,7 @@ export default {
         handleDelete(id) {
             this.$post("/permission/deletePermission", { id: id, pageNum: 1, pageSize: 10 })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                 })
@@ -185,7 +185,7 @@ export default {
                 .then((res) => {
                     this.add = false;
                     this.createForm = {};
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                 })
@@ -214,7 +214,7 @@ export default {
                 pageSize: this.pageSize,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
@@ -231,7 +231,7 @@ export default {
                 pageSize: val,
             })
                 .then((res) => {
-                    this.tableData = res.resultList;
+                    this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
@@ -246,7 +246,7 @@ export default {
     mounted() {
         this.$post("/permission/getPermissionList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
-                this.tableData = res.resultList;
+                this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
 
@@ -259,43 +259,4 @@ export default {
 };
 </script>
 
-<style>
-.el-form--inline .el-form-item__label {
-    float: left;
-}
-
-.main {
-    font-size: 30px;
-    color: #000000;
-    border: #000000;
-}
-.header-title {
-    margin: 0px;
-}
-.el-row {
-    margin-bottom: 20px;
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-.el-col {
-    border-radius: 4px;
-}
-.bg-purple-dark {
-    background: #99a9bf;
-}
-.bg-purple {
-    background: #d3dce6;
-}
-.bg-purple-light {
-    background: #e5e9f2;
-}
-.grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-}
-.row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-}
-</style>
+ 
