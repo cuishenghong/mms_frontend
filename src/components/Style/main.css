@@ -88,3 +88,6 @@
 .float-left{
     float: left;
 }
+.el-table__body tr.current-row > td {
+    background-color: #ECF5D1;
+}

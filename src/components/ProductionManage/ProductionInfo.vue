@@ -26,7 +26,7 @@
             </el-form-item>
         </el-form>
         <el-button class="add-button" type="success" @click="handleAddProd('1')"
-            >新增用户</el-button
+            >新增产品</el-button
         >
         <el-dialog
             :title="titleMap[dialogStatus]"
@@ -199,8 +199,8 @@ export default {
         var pageNum = 1;
          return {
             titleMap: {
-                addProd: "新增用户",
-                editProd: "编辑用户信息",
+                addProd: "新增产品",
+                editProd: "编辑产品信息",
             },
             dialogStatus: "",
             displayForm: this.displayForm,

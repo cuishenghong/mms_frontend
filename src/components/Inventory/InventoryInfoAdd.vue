@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { _findIndex } from "lodash";
+import _ from "lodash";
 
 export default {
     data() {
@@ -161,6 +161,7 @@ export default {
 
             selectedProdId: "",
             disabled: true,
+            currentRow: this.createForm,
         };
     },
     methods: {
@@ -233,7 +234,7 @@ export default {
         },
         handleTableRowChange(val) {
             this.currentRow = val;
-            this.selectedProdId = val.id;
+            this.selectedProdId = val && val.id;
             this.disabled = false;
         },
         setCurrent(row) {
@@ -282,17 +283,17 @@ export default {
                 this.totalCount = res.totalCount;
                 var prodList = res.resultList;
                 if (this.$route.params.id) {
-                    console.log(this.$route.params.productionId);
                     var editProductionId = this.$route.params.productionId;
+                    var prodArray = { id: editProductionId };
+
                     this.$post("/inventory/getInventoryList", {
                         id: this.$route.params.id,
                     })
                         .then((res) => {
                             this.createForm = res.resultList[0];
-                            var a = prodList._findIndex(
-                                editProductionId
-                            );
-                            console.log(a);
+                            var a = _.findIndex(prodList, prodArray);
+                            this.currentRow = prodList[a];
+                            this.$refs.displayForm.setCurrentRow(prodList[a]);
                         })
                         .catch(function (error) {
                             console.log(error);
