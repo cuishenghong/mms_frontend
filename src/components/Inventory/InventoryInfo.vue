@@ -44,7 +44,7 @@
                     </div>
                     <div v-else>单碗</div>
                 </template>
-            </el-table-column>            
+            </el-table-column>
             <el-table-column prop="per" label="每套个数"> </el-table-column>
             <el-table-column prop="suite" label="套数"> </el-table-column>
             <el-table-column prop="arrivalBatch" label="到货批次" width="200">
@@ -78,19 +78,19 @@
             ></el-table-column>
             <el-table-column fixed="right" label="操作" width="150">
                 <template slot-scope="scope">
-                    
                     <el-button
-                        @click="handleDetail(scope.row.id)"
-                        type="text"
+ @click="handleDetail(scope.row.id, scope.row.productionId)
+"                        type="text"
                         size="small"
                         >详情</el-button
                     >
                     <el-button
-                        @click="editInven(scope.row.id)"
+                        @click="editInven(scope.row.id, scope.row.productionId)"
                         type="text"
                         size="small"
                         >编辑</el-button
-                    > <el-button
+                    >
+                    <el-button
                         @click="handleDelete(scope.row.id)"
                         type="text"
                         size="small"
@@ -111,8 +111,7 @@
             >
             </el-pagination>
         </div>
-    
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -121,8 +120,7 @@ export default {
         var pageSize = 10;
         var pageNum = 1;
         return {
-           
-             displayForm: this.displayForm,
+            displayForm: this.displayForm,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -135,7 +133,7 @@ export default {
                 name: "",
                 account: "",
             },
-         };
+        };
     },
     methods: {
         handleSearch(form) {
@@ -160,17 +158,17 @@ export default {
                 params: { flag: "addInven" },
             });
         },
-       
-          handleDetail(id) {            
-             this.$router.push({
+
+        handleDetail(id) {
+            this.$router.push({
                 name: "InventoryDetail",
-                params: {  id  },
+                params: { id },
             });
         },
-        editInven(id) {            
-             this.$router.push({
+       editInven(id, productionId) {
+            this.$router.push({
                 name: "InventoryInfoAdd",
-                params: { flag: "editInven", id  },
+                params: { id, productionId },
             });
         },
         handleClose(done) {
@@ -181,7 +179,11 @@ export default {
                 .catch((_) => {});
         },
         handleDelete(id) {
-            this.$post("/inventory/deleteInventory", { id: id, pageNum: 1, pageSize: 10 })
+            this.$post("/inventory/deleteInventory", {
+                id: id,
+                pageNum: 1,
+                pageSize: 10,
+            })
                 .then((res) => {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
@@ -192,7 +194,6 @@ export default {
                 });
         },
 
-       
         handleCurrentChange(val) {
             this.$post("/inventory/getInventoryList", {
                 pageNum: val,
@@ -204,7 +205,6 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
                     this.pageSize = this.pageSize;
-                  
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -221,7 +221,7 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                 })
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -233,7 +233,6 @@ export default {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
- 
             })
             .catch(function (error) {
                 console.log(error);
