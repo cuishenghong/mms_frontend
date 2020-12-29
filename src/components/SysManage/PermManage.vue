@@ -25,9 +25,10 @@
                 >
             </el-form-item>
         </el-form>
-         <el-button class="add-button" type="success" @click="handleAdd('1')"
+        <el-button class="add-button" type="success" @click="handleAdd('1')"
             >新增权限</el-button
-  
+        >
+
         <el-dialog
             :title="titleMap[dialogStatus]"
             :visible.sync="add"
@@ -59,7 +60,12 @@
             </el-form>
         </el-dialog>
         <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column fixed prop="permissonName" label="权限名称" width="250">
+            <el-table-column
+                fixed
+                prop="permissonName"
+                label="权限名称"
+                width="250"
+            >
             </el-table-column>
             <el-table-column
                 prop="remark"
@@ -143,7 +149,6 @@ export default {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
                     this.totalCount = res.totalCount;
- 
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -157,7 +162,11 @@ export default {
                 .catch((_) => {});
         },
         handleDelete(id) {
-            this.$post("/permission/deletePermission", { id: id, pageNum: 1, pageSize: 10 })
+            this.$post("/permission/deletePermission", {
+                id: id,
+                pageNum: 1,
+                pageSize: 10,
+            })
                 .then((res) => {
                     this.displayForm = res.resultList;
                     this.totalpage = res.totalpage;
@@ -169,7 +178,8 @@ export default {
         },
 
         handleAdd(flag) {
-            if (flag) { this.createForm = {};
+            if (flag) {
+                this.createForm = {};
                 (this.add = true), (this.dialogStatus = "add");
             } else {
                 this.add = false;
@@ -218,7 +228,7 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageNum = val;
                     this.pageSize = this.pageSize;
-                 })
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -234,19 +244,21 @@ export default {
                     this.totalCount = res.totalCount;
                     this.pageSize = val;
                     this.pageNum = this.pageNum;
-                 })
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
     },
     mounted() {
-        this.$post("/permission/getPermissionList", { pageNum: 1, pageSize: 10 })
+        this.$post("/permission/getPermissionList", {
+            pageNum: 1,
+            pageSize: 10,
+        })
             .then((res) => {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
- 
             })
             .catch(function (error) {
                 console.log(error);
@@ -254,5 +266,3 @@ export default {
     },
 };
 </script>
-
- 

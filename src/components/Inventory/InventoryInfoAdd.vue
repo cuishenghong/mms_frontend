@@ -134,6 +134,8 @@
 </template>
 
 <script>
+import { _findIndex } from "lodash";
+
 export default {
     data() {
         var pageSize = 10;
@@ -273,23 +275,29 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.params.id) {
-            this.$post("/inventory/getInventoryList", {
-                id: this.$route.params.id,
-            })
-                .then((res) => {
-                    this.createForm = res.resultList[0];
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-
         this.$post("/production/getProdList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
+                var prodList = res.resultList;
+                if (this.$route.params.id) {
+                    console.log(this.$route.params.productionId);
+                    var editProductionId = this.$route.params.productionId;
+                    this.$post("/inventory/getInventoryList", {
+                        id: this.$route.params.id,
+                    })
+                        .then((res) => {
+                            this.createForm = res.resultList[0];
+                            var a = prodList._findIndex(
+                                editProductionId
+                            );
+                            console.log(a);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             })
             .catch(function (error) {
                 console.log(error);
