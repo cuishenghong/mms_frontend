@@ -27,6 +27,7 @@
         </el-form>
          <el-button class="add-button" type="success" @click="handleAdd('1')"
             >新增权限</el-button
+        >
   
         <el-dialog
             :title="titleMap[dialogStatus]"
@@ -80,6 +81,12 @@
                         size="small"
                         >删除</el-button
                     >
+                    <el-button
+                        @click="handleConfig(scope.row.id)"
+                        type="text"
+                        size="small"
+                        >配置</el-button
+                    >
                 </template>
             </el-table-column>
         </el-table>
@@ -132,6 +139,7 @@ export default {
     },
     methods: {
         handleSearch(form) {
+            debugger;
             console.log("submit!");
             this.$post("/permission/getPermissionList", {
                 permissonName: form.permissonName,
@@ -255,4 +263,3 @@ export default {
 };
 </script>
 
- 

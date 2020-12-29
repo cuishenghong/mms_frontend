@@ -44,7 +44,7 @@
                     </div>
                     <div v-else>单碗</div>
                 </template>
-            </el-table-column>            </el-table-column>
+            </el-table-column>            
             <el-table-column prop="per" label="每套个数"> </el-table-column>
             <el-table-column prop="suite" label="套数"> </el-table-column>
             <el-table-column prop="arrivalBatch" label="到货批次" width="200">
