@@ -19,10 +19,14 @@
                 ></el-input>
             </el-form-item>
             <el-form-item label="产品类型">
-                <el-input
+                <el-select
                     v-model="selectForm.productionType"
-                    placeholder="产品类型"
-                ></el-input>
+                    placeholder="商品种类"
+                    ><el-option label="透明碗" value="3"></el-option>
+                    <el-option label="套碗" value="2"></el-option>
+                    <el-option label="单碗" value="1"></el-option>
+                    <el-option label="全部" value=""></el-option>
+                </el-select>
             </el-form-item>
 
             <el-form-item>
@@ -158,8 +162,8 @@ export default {
             this.isRequest = true;
 
             this.$post("/inventory/getInventoryList", {
-                id: form.productionId,
-                creator: form.creator,
+                productionName: form.productionName,
+                productionType: form.productionType,
                 pageNum: 1,
                 pageSize: 10,
             })

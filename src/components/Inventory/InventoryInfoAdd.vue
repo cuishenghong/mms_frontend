@@ -2,7 +2,7 @@
     <div>
         <div>
             <i class="el-icon-back float-left" @click="handleBack()"
-                >返回库存信息</i
+                >返回</i
             >
         </div>
         <div
@@ -13,34 +13,6 @@
             element-loading-background="rgba(0, 0, 0, 0.8)"
         >
             <div class="container-submit">
-                <el-form
-                    :inline="true"
-                    :model="selectForm"
-                    class="demo-form-inline"
-                    style="line-height: 80px !important"
-                >
-                    <el-form-item label="商品名称">
-                        <el-input
-                            v-model="selectForm.productionName"
-                            placeholder="商品名称"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="商品类型">
-                        <el-input
-                            v-model="selectForm.productionType"
-                            placeholder="商品类型"
-                        ></el-input>
-                    </el-form-item>
-
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            @click="handleSearch(selectForm)"
-                            >查询</el-button
-                        >
-                    </el-form-item>
-                </el-form>
-
                 <el-button class="float-left" @click="setCurrent()"
                     >取消所选产品</el-button
                 >
@@ -191,10 +163,7 @@ export default {
             totalCount: this.totalCount,
             pageSize: this.pageSize,
             pageNum: this.pageNum,
-            selectForm: {
-                name: "",
-                account: "",
-            },
+
             form: {
                 name: "",
                 account: "",
@@ -215,24 +184,7 @@ export default {
                 name: "Inventory",
             });
         },
-        handleSearch(form) {
-            this.isRequest = true;
-            this.$post("/production/getProdList", {
-                productionName: form.productionName,
-                productionType: form.productionType,
-                pageNum: 1,
-                pageSize: 10,
-            })
-                .then((res) => {
-                    this.displayForm = res.resultList;
-                    this.totalpage = res.totalpage;
-                    this.totalCount = res.totalCount;
-                    this.isRequest = false;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        },
+
         handleAddProd() {
             this.$router.push({
                 name: "Inventory",

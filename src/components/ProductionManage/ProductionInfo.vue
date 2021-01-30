@@ -13,10 +13,14 @@
                 ></el-input>
             </el-form-item>
             <el-form-item label="商品类型">
-                <el-input
+                <el-select
                     v-model="selectForm.productionType"
-                    placeholder="商品类型"
-                ></el-input>
+                    placeholder="商品种类"
+                    ><el-option label="透明碗" value="3"></el-option>
+                    <el-option label="套碗" value="2"></el-option>
+                    <el-option label="单碗" value="1"></el-option>
+                    <el-option label="全部" value=""></el-option>
+                </el-select>
             </el-form-item>
 
             <el-form-item>
@@ -197,7 +201,7 @@ export default {
     data() {
         var pageSize = 10;
         var pageNum = 1;
-         return {
+        return {
             titleMap: {
                 addProd: "新增产品",
                 editProd: "编辑产品信息",
