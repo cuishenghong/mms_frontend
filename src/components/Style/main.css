@@ -114,3 +114,6 @@
 .el-table__body tr.current-row > td {
     background-color: #ecf5d1;
 }
+.back-font{
+    font-size: 16px;
+}

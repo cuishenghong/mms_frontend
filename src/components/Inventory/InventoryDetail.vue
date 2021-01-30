@@ -7,12 +7,12 @@
         element-loading-background="rgba(0, 0, 0, 0.8)"
     >
         <div>
-            <i class="el-icon-back float-left" @click="handleBack()">返回库存信息</i>
-            <h1 class="header-title">{{ msg }}</h1>
+            <i class="el-icon-back float-left back-font" @click="handleBack()">返回 </i>
+            <h5 class="header-title">{{ msg }}</h5>
         </div>
         <el-form
             ref="form"
-            :model="form"
+            :model="form"back-font
             label-width="80px"
             class="detail-form"
         >
