@@ -12,16 +12,16 @@
             class="demo-form-inline"
             style="line-height: 80px !important"
         >
+            <el-form-item label="订单号">
+                <el-input
+                    v-model="selectForm.orderId"
+                    placeholder="订单号"
+                ></el-input>
+            </el-form-item>
             <el-form-item label="产品名称">
                 <el-input
                     v-model="selectForm.productionName"
                     placeholder="产品名称"
-                ></el-input>
-            </el-form-item>
-            <el-form-item label="产品类型">
-                <el-input
-                    v-model="selectForm.productionType"
-                    placeholder="产品类型"
                 ></el-input>
             </el-form-item>
 
@@ -35,38 +35,31 @@
             class="add-button"
             type="success"
             @click="handleAddInven('1')"
-            >新建库存</el-button
+            >新建销售记录</el-button
         >
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column prop="productionName" label="产品名称">
             </el-table-column>
 
-            <el-table-column prop="productionType" label="商品类型">
-                <template slot-scope="scope">
-                    <div v-if="scope.row.productionType === '1'">单碗</div>
-                    <div v-else-if="scope.row.productionType === '2'">套碗</div>
-                    <div v-else-if="scope.row.productionType === '3'">
-                        透明碗
-                    </div>
-                    <div v-else>单碗</div>
-                </template>
+            <el-table-column prop="orderId" label="订单号"> </el-table-column>
+            <el-table-column prop="amount" label="数量"> </el-table-column>
+            <el-table-column prop="price" label="单价"> </el-table-column>
+            <el-table-column prop="total" label="总价" width="200">
             </el-table-column>
-            <el-table-column prop="per" label="每套个数"> </el-table-column>
-            <el-table-column prop="suite" label="套数"> </el-table-column>
-            <el-table-column prop="arrivalBatch" label="到货批次" width="200">
-            </el-table-column>
-            <el-table-column prop="inventoryWarning" label="库存预警">
+            <el-table-column prop="faultType" label="问题件类型">
                 <template slot-scope="scope">
-                    <div v-if="scope.row.inventoryWarning === '1'">正常</div>
-                    <div v-else-if="scope.row.inventoryWarning === '2'">
-                        预警
-                    </div>
-                    <div v-else-if="scope.row.inventoryWarning === '3'">
-                        库存不足
-                    </div>
+                    <div v-if="scope.row.faultType === '1'">正常</div>
+                    <div v-else-if="scope.row.faultType === '2'">运输损坏</div>
+                    <div v-else-if="scope.row.faultType === '3'">销毁</div>
+                    <div v-else-if="scope.row.faultType === '4'">其他</div>
                     <div v-else>正常</div>
                 </template>
             </el-table-column>
+            <el-table-column
+                prop="faultDescription"
+                label="问题件描述"
+                width="100"
+            ></el-table-column>
             <el-table-column
                 prop="creator"
                 label="创建人"
@@ -135,7 +128,6 @@ export default {
     data() {
         var pageSize = 10;
         var pageNum = 1;
-
         return {
             displayForm: this.displayForm,
             totalpage: this.totalpage,
@@ -157,7 +149,7 @@ export default {
         handleSearch(form) {
             this.isRequest = true;
 
-            this.$post("/inventory/getInventoryList", {
+            this.$post("/sale/getSaleList", {
                 id: form.productionId,
                 creator: form.creator,
                 pageNum: 1,
@@ -175,7 +167,7 @@ export default {
         },
         handleAddInven(flag) {
             this.$router.push({
-                name: "InventoryInfoAdd",
+                name: "SaleInfoAdd",
                 params: { flag: "addInven" },
             });
         },
@@ -188,7 +180,7 @@ export default {
         },
         editInven(id, productionId) {
             this.$router.push({
-                name: "InventoryInfoAdd",
+                name: "SaleInfoAdd",
                 params: { id, productionId },
             });
         },
@@ -202,7 +194,7 @@ export default {
         handleDelete(id) {
             this.isRequest = true;
 
-            this.$post("/inventory/deleteInventory", {
+            this.$post("/sale/deleteSaleRecord", {
                 id: id,
                 pageNum: 1,
                 pageSize: 10,
@@ -220,7 +212,8 @@ export default {
 
         handleCurrentChange(val) {
             this.isRequest = true;
-            this.$post("/inventory/getInventoryList", {
+
+            this.$post("/sale/getSaleList", {
                 pageNum: val,
                 pageSize: this.pageSize,
             })
@@ -239,7 +232,7 @@ export default {
         handleSizeChange(val) {
             this.isRequest = true;
 
-            this.$post("/inventory/getInventoryList", {
+            this.$post("/sale/getSaleList", {
                 pageNum: this.pageNum,
                 pageSize: val,
             })
@@ -258,7 +251,8 @@ export default {
     },
     mounted() {
         this.isRequest = true;
-        this.$post("/inventory/getInventoryList", { pageNum: 1, pageSize: 10 })
+
+        this.$post("/sale/getSaleList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;
                 this.totalpage = res.totalpage;

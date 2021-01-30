@@ -36,7 +36,10 @@ export default {
                 {
                     index: "Inventory",
                     name: "库存管理",
-                    child: [{ index: "Inventory", name: "库存信息" }],
+                    child: [
+                        { index: "Inventory", name: "库存信息" },
+                        { index: "SaleInfo", name: "销售信息" },
+                    ],
                 },
 
                 {

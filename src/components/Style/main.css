@@ -1,6 +1,10 @@
 .login {
     margin-top: 200px;
+    width: 200px;
+    text-align: center;
+    display: inline-table;
 }
+
 .input_style {
     width: 200px;
     margin-bottom: 10px;
@@ -22,12 +26,6 @@
 
 .main .el-table td {
     padding: 0px 0px;
-}
-.el-row {
-    margin-bottom: 20px;
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
 .el-col {
@@ -58,7 +56,7 @@
 
 .el-table tr {
     border-radius: 4px;
- }
+}
 .el-table th.is-leaf {
     background-color: #50cbf5;
     line-height: 2;
@@ -79,15 +77,40 @@
     background-color: #ffffff;
     padding: 34px;
 }
+
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+.detail-form .el-row {
+    margin-bottom: 0;
+}
+
+.detail-form .el-main {
+    line-height: 70px;
+}
+
+.detail-form .production-type {
+    background-color: #f5f7fa;
+    border-color: #e4e7ed;
+    color: #c0c4cc;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    cursor: not-allowed;
+    height: 40px;
+}
+
 .container-submit {
     border: solid 1px firebrick;
     padding: 30px;
     border-radius: 10px;
     line-height: 51px;
 }
-.float-left{
+.float-left {
     float: left;
 }
 .el-table__body tr.current-row > td {
-    background-color: #ECF5D1;
+    background-color: #ecf5d1;
 }
