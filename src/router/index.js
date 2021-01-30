@@ -6,6 +6,8 @@ import NavMenu from '../components/NavMenu/NavMenu'
 import Inventory from '../components/Inventory/InventoryInfo'
 import InventoryDetail from '../components/Inventory/InventoryDetail'
 import InventoryInfoAdd from '../components/Inventory/InventoryInfoAdd'
+import SaleInfo from '../components/Inventory/SaleInfo'
+import SaleInfoAdd from '../components/Inventory/SaleInfoAdd'
 import NotFound from '../components/NotFound'
 
 import ProductionManage from '../components/ProductionManage/ProductionInfo'
@@ -72,7 +74,22 @@ export default new Router({
         keepalive:true
       }
     },
-    
+    {
+      path: '/SaleInfo',
+      name: 'SaleInfo',
+      component: SaleInfo,
+      meta:{
+        keepalive:true
+      }
+    },
+    {
+      path: '/SaleInfoAdd',
+      name: 'SaleInfoAdd',
+      component: SaleInfoAdd,
+      meta:{
+        keepalive:true
+      }
+    },
     {
       path: '/ProductionManage',
       name: 'ProductionManage',

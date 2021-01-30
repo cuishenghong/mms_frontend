@@ -1,10 +1,9 @@
 <template>
     <div>
         <div>
-            <i class="el-icon-back float-left" @click="handleBack()"
-                >返回库存信息</i
-            >
-        </div>
+        <i class="el-icon-back float-left" @click="handleBack()"
+            >返回库存信息</i
+        ></div>
         <div
             class="main"
             v-loading="isRequest"
@@ -212,7 +211,7 @@ export default {
     methods: {
         handleBack() {
             this.$router.push({
-                name: "Inventory",
+                name: "SaleInfo",
             });
         },
         handleSearch(form) {

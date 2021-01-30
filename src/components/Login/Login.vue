@@ -54,6 +54,10 @@ export default {
                                 username: this.name,
                             },
                         });
+                    }else if(res.code === 2){
+                        alert(res.msg);
+                    }else if(res.code === 3){
+                        alert(res.msg);
                     }
                 })
                 .catch(function (error) {
