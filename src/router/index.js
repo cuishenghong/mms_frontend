@@ -15,6 +15,7 @@ import ProductionManage from '../components/ProductionManage/ProductionInfo'
 import UserManage from '../components/SysManage/UserManage'
 import RoleManage from '../components/SysManage/RoleManage'
 import PermManage from '../components/SysManage/PermManage'
+import DictManage from '../components/SysManage/DictManage'
 import ElementUi from 'element-ui'
 import '@/theme-et/index.css'
 Vue.use(ElementUi)
@@ -123,12 +124,20 @@ export default new Router({
       }
     },
     {
-      path: '/not-found',
-      component: NotFound,
-      name: 'not-found',
+      path: '/DictManage',
+      name: 'DictManage',
+      component: DictManage,
       meta:{
         keepalive:true
       }
     }
+    // {
+    //   path: '/not-found',
+    //   component: NotFound,
+    //   name: 'not-found',
+    //   meta:{
+    //     keepalive:true
+    //   }
+    // }
   ]
 })

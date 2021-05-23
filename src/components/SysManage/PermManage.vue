@@ -4,11 +4,10 @@
             :inline="true"
             :model="selectForm"
             class="demo-form-inline"
-            style="line-height: 80px !important"
         >
             <el-form-item label="权限名称">
                 <el-input
-                    v-model="selectForm.permissonName"
+                    v-model="selectForm.permissionName"
                     placeholder="权限名称"
                 ></el-input>
             </el-form-item>
@@ -41,7 +40,7 @@
                     <el-col :span="12"
                         ><el-form-item label="权限名称">
                             <el-input
-                                v-model="createForm.permissonName"
+                                v-model="createForm.permissionName"
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
@@ -63,8 +62,14 @@
         <el-table :data="displayForm" border style="width: 100%">
             <el-table-column
                 fixed
-                prop="permissonName"
+                prop="permissionName"
                 label="权限名称"
+                width="250"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="permissionName"
+                label="角色列表"
                 width="250"
             >
             </el-table-column>
@@ -129,11 +134,11 @@ export default {
             pageSize: this.pageSize,
             pageNum: this.pageNum,
             selectForm: {
-                permissonName: "",
+                permissionName: "",
                 remark: "",
             },
             form: {
-                permissonName: "",
+                permissionName: "",
                 remark: "",
             },
             createForm: {
@@ -148,7 +153,7 @@ export default {
             debugger;
             console.log("submit!");
             this.$post("/permission/getPermissionList", {
-                permissonName: form.permissonName,
+                permissionName: form.permissionName,
                 remark: form.remark,
                 pageNum: 1,
                 pageSize: 10,
@@ -196,7 +201,7 @@ export default {
 
         create(form) {
             this.$post("/permission/insertPermission", {
-                permissonName: form.permissonName,
+                permissionName: form.permissionName,
                 remark: form.remark,
             })
                 .then((res) => {

@@ -7,6 +7,7 @@ import axios from "axios";
 
 import "element-ui/lib/theme-chalk/index.css";
 import "./components/Style/main.css";
+import "./components/Style/dictionary.css";
 import App from "./App";
 import router from "./router";
 
@@ -26,7 +27,8 @@ Vue.prototype.$axios = axios;
 axios.defaults.headers.common["Authorization"] = "testHeader";
 axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-
+    axios.defaults.withCredentials = true
+ 
 /* eslint-disable no-new */
 var app = new Vue({
     el: "#app",

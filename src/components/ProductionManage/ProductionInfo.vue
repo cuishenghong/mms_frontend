@@ -4,7 +4,6 @@
             :inline="true"
             :model="selectForm"
             class="demo-form-inline"
-            style="line-height: 80px !important"
         >
             <el-form-item label="商品名称">
                 <el-input
@@ -147,7 +146,7 @@
             <el-table-column
                 prop="createTime"
                 label="创建日期"
-                width="150"
+                width="160"
             ></el-table-column>
             <el-table-column
                 prop="modifier"

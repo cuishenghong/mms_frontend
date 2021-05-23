@@ -85,11 +85,12 @@
                 <el-form
                     ref="createForm"
                     :model="createForm"
+                    :rules="rules"
                     label-width="80px"
                 >
                     <el-row :gutter="20">
                         <el-col :span="12"
-                            ><el-form-item label="到货批次">
+                            ><el-form-item label="到货批次" class="is-required" prop="arrivalBatch">
                                 <el-input
                                     v-model="createForm.arrivalBatch"
                                 ></el-input> </el-form-item
@@ -110,32 +111,39 @@
                                 ></el-input> </el-form-item
                         ></el-col>
                         <el-col :span="12">
-                            <el-form-item label="库存预警">
+                            <el-form-item label="库存状态" class="is-required" prop="state">
                                 <el-select
-                                    v-model="createForm.inventoryWarning"
-                                    placeholder="库存预警"
-                                >
+                                    v-model="createForm.state"
+                                    placeholder="库存状态">
                                     <el-option
-                                        label="库存不足"
-                                        value="3"
+                                        label="发起"
+                                        value="1"
                                     ></el-option>
                                     <el-option
-                                        label="预警"
+                                        label="在途"
                                         value="2"
                                     ></el-option>
                                     <el-option
-                                        label="正常"
-                                        value="1"
+                                        label="到货"
+                                        value="3"
                                     ></el-option>
                                 </el-select>
                             </el-form-item>
+                            
                         </el-col>
                     </el-row>
-
+                    <el-row :gutter="20"
+                        ><el-col :span="12"
+                            ><el-form-item label="备注">
+                                <el-input
+                                    v-model="createForm.remark"
+                                ></el-input> </el-form-item
+                        ></el-col>
+                    </el-row>
                     <el-form-item>
                         <el-button
                             type="primary"
-                            @click="handleCreate(createForm)"
+                            @click="handleCreate('createForm')"
                             :disabled="disabled"
                         >
                             创建
@@ -176,7 +184,19 @@ export default {
             disabled: true,
             currentRow: this.createForm,
             isRequest: this.isRequest,
+            rules: {
+                state: [
+                        // 还可以通过pattern来加入正则    
+                    { type: 'string',required: true, message: '请选择库存状态', trigger: 'click' },
+                    // 也可以放入两条验证规则
+                    // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                arrivalBatch:[
+                    { type: 'string',required: true, message: '请输入到货批次号', trigger: 'click' },
+                ]
+            },
         };
+        
     },
     methods: {
         handleBack() {
@@ -191,56 +211,66 @@ export default {
             });
         },
         handleCreate(form) {
-            if (!this.$route.params.id) {
-                this.isRequest = true;
-
-                this.$post("/inventory/insertInventory", {
-                    productionId: this.selectedProdId,
-                    arrivalBatch: form.arrivalBatch,
-                    per: form.per,
-                    suite: form.suite,
-                    inventoryWarning: form.inventoryWarning,
-                })
-                    .then((res) => {
-                        this.$router.push({
-                            name: "Inventory",
-                        });
-                        this.addProd = false;
-                        this.createForm = {};
-                        this.displayForm = res.resultList;
-                        this.totalpage = res.totalpage;
-                        this.totalCount = res.totalCount;
-                        this.isRequest = false;
+            this.$refs[form].validate((valid) => {
+                console.log(this.form)
+                if(valid){
+                   if (!this.$route.params.id) {
+                    this.isRequest = true;
+                    this.$post("/inventory/insertInventory", {
+                        productionId: this.selectedProdId,
+                        arrivalBatch: form.arrivalBatch,
+                        per: form.per,
+                        suite: form.suite,
+                        inventoryWarning: form.inventoryWarning,
+                        remark: form.remark,
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            } else {
-                this.isRequest = true;
-
-                this.$post("/inventory/updateInventory", {
-                    id: this.$route.params.id,
-                    productionId: this.selectedProdId,
-                    arrivalBatch: form.arrivalBatch,
-                    per: form.per,
-                    suite: form.suite,
-                    inventoryWarning: form.inventoryWarning,
-                })
-                    .then((res) => {
-                        this.$router.push({
-                            name: "Inventory",
+                        .then((res) => {
+                            this.$router.push({
+                                name: "Inventory",
+                            });
+                            this.addProd = false;
+                            this.createForm = {};
+                            this.displayForm = res.resultList;
+                            this.totalpage = res.totalpage;
+                            this.totalCount = res.totalCount;
+                            this.isRequest = false;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
                         });
-                        this.addProd = false;
-                        this.createForm = {};
-                        this.displayForm = res.resultList;
-                        this.totalpage = res.totalpage;
-                        this.totalCount = res.totalCount;
-                        this.isRequest = false;
+                } else {
+                    this.isRequest = true;
+                    this.$post("/inventory/updateInventory", {
+                        id: this.$route.params.id,
+                        productionId: this.selectedProdId,
+                        arrivalBatch: form.arrivalBatch,
+                        per: form.per,
+                        suite: form.suite,
+                        inventoryWarning: form.inventoryWarning,
+                        remark: form.remark,
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+                        .then((res) => {
+                            this.$router.push({
+                                name: "Inventory",
+                            });
+                            this.addProd = false;
+                            this.createForm = {};
+                            this.displayForm = res.resultList;
+                            this.totalpage = res.totalpage;
+                            this.totalCount = res.totalCount;
+                            this.isRequest = false;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+                }else{
+                    alert("验证失败")
+                return false
+                }
+            });
+            
+            
         },
         handleTableRowChange(val) {
             this.currentRow = val;

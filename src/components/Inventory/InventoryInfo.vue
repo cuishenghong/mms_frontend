@@ -42,9 +42,8 @@
             >新建库存</el-button
         >
         <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column prop="productionName" label="产品名称">
-            </el-table-column>
-
+            <el-table-column fixed prop="productionName" label="产品名称" width="150"></el-table-column>
+            <el-table-column prop="arrivalBatch" label="到货批次" width="200"></el-table-column>
             <el-table-column prop="productionType" label="商品类型">
                 <template slot-scope="scope">
                     <div v-if="scope.row.productionType === '1'">单碗</div>
@@ -57,8 +56,9 @@
             </el-table-column>
             <el-table-column prop="per" label="每套个数"> </el-table-column>
             <el-table-column prop="suite" label="套数"> </el-table-column>
-            <el-table-column prop="arrivalBatch" label="到货批次" width="200">
-            </el-table-column>
+           
+            <el-table-column prop="totalNumber" label="总个数"> </el-table-column>
+            <el-table-column prop="totalSets" label="总套数"> </el-table-column>
             <el-table-column prop="inventoryWarning" label="库存预警">
                 <template slot-scope="scope">
                     <div v-if="scope.row.inventoryWarning === '1'">正常</div>
