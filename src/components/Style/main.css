@@ -19,9 +19,11 @@
     width: 80%;
     margin: 0 auto;
     border: #000000;
+    line-height: 40px;
 }
 .main .el-form--inline .el-form-item__label {
     float: left;
+
 }
 
 .main .el-table td {

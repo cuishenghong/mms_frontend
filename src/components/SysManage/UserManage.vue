@@ -4,7 +4,6 @@
             :inline="true"
             :model="selectForm"
             class="demo-form-inline"
-            style="line-height: 80px !important"
         >
             <el-form-item label="用户名">
                 <el-input
@@ -12,6 +11,7 @@
                     placeholder="用户名"
                 ></el-input>
             </el-form-item>
+            
             <el-form-item label="账号">
                 <el-input
                     v-model="selectForm.account"
@@ -43,42 +43,58 @@
                             ></el-input> </el-form-item
                     ></el-col>
                     <el-col :span="12"
+                        ><el-form-item label="昵称">
+                            <el-input
+                                v-model="createForm.alias"
+                            ></el-input> </el-form-item
+                    ></el-col>
+                </el-row>
+                <el-row :gutter="20"
+                    >
+                    <el-col :span="12"
                         ><el-form-item label="用户账号">
                             <el-input
                                 v-model="createForm.account"
                             ></el-input> </el-form-item
                     ></el-col>
-                </el-row>
-                <el-row :gutter="20"
-                    ><el-col :span="12"
+                    <el-col :span="12"
                         ><el-form-item label="用户密码">
                             <el-input
                                 v-model="createForm.password"
                             ></el-input> </el-form-item
                     ></el-col>
-                    <el-col :span="12"
-                        ><el-form-item label="性别">
-                            <el-select
-                                v-model="createForm.sex"
-                                placeholder="请选择性别"
-                            >
-                                <el-option label="女" value="2"></el-option>
-                                <el-option label="男" value="1"></el-option>
-                            </el-select> </el-form-item></el-col
-                ></el-row>
+                    </el-row>
                 <el-row :gutter="20"
-                    ><el-col :span="12"
+                    >
+                    <el-col :span="12"
+                        ><el-form-item label="仓属">
+                            
+                          
+                             <el-select v-model="createForm.dictName" >
+                                <el-option v-for="item in dict" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+                            </el-select>
+                       
+                            </el-form-item></el-col
+                >
+                    <el-col :span="12"
                         ><el-form-item label="手机号">
                             <el-input
                                 v-model="createForm.mobilePhone"
                             ></el-input> </el-form-item
                     ></el-col>
+                    </el-row>
+                <el-row>
                     <el-col :span="12"
                         ><el-form-item label="邮箱">
                             <el-input
                                 v-model="createForm.mail"
-                            ></el-input> </el-form-item></el-col
-                ></el-row>
+                            ></el-input> </el-form-item></el-col>
+                    <el-col :span="12"
+                        ><el-form-item label="标语">
+                            <el-input
+                                v-model="createForm.slogan"
+                            ></el-input> </el-form-item></el-col>
+                </el-row>
 
                 <el-form-item>
                     <el-button
@@ -92,17 +108,17 @@
             </el-form>
         </el-dialog>
         <el-table :data="displayForm" border style="width: 100%">
-            <el-table-column fixed prop="name" label="用户名" width="150">
+            <el-table-column fixed prop="name" label="用户名" width="100">
             </el-table-column>
             <el-table-column
                 prop="account"
                 label="账号"
-                width="100"
+                width="150"
             ></el-table-column>
             <el-table-column
                 prop="alias"
                 label="昵称"
-                width="100"
+                width="120"
             ></el-table-column>
             <el-table-column prop="sex" label="性别"
                 ><template slot-scope="scope">{{
@@ -112,7 +128,7 @@
             <el-table-column
                 prop="mobilePhone"
                 label="手机号"
-                width="200"
+                width="150"
             ></el-table-column>
             <el-table-column
                 prop="mail"
@@ -142,7 +158,7 @@
             <el-table-column
                 prop="updateTime"
                 label="修改日期"
-                width="150"
+                width="160"
             ></el-table-column>
             <el-table-column
                 prop="remark"
@@ -186,7 +202,7 @@ export default {
     data() {
         var pageSize = 10;
         var pageNum = 1;
-        console.log(this.createForm);
+        console.log('creactForm:'+this.createForm);
         return {
             titleMap: {
                 addUser: "新增用户",
@@ -194,6 +210,7 @@ export default {
             },
             dialogStatus: "",
             displayForm: this.displayForm,
+            dict: this.dict,
             totalpage: this.totalpage,
             totalCount: this.totalCount,
             pageSize: this.pageSize,
@@ -211,7 +228,10 @@ export default {
             },
 
             addUser: false,
+            dictName:'',
         };
+         console.log('creactForm:'+this.addUser);
+
     },
     methods: {
         handleSearch(form) {
@@ -263,11 +283,13 @@ export default {
             if (flag === "addUser") {
                 this.$post("/user/insertUser", {
                     name: form.name,
+                    alias: form.alias,
                     account: form.account,
                     password: form.password,
-                    sex: form.sex,
+                    dictName: form.dictName,
                     mobilePhone: form.mobilePhone,
                     mail: form.mail,
+                    slogan: form.slogan,
                 })
                     .then((res) => {
                         this.addUser = false;
@@ -283,11 +305,13 @@ export default {
                 this.$post("/user/updateUser", {
                     id: form.id,
                     name: form.name,
+                    alias: form.alias,
                     account: form.account,
                     password: form.password,
-                    sex: form.sex,
+                    dictName: form.dictName,
                     mobilePhone: form.mobilePhone,
                     mail: form.mail,
+                    slogan: form.slogan,
                 })
                     .then((res) => {
                         this.addUser = false;
@@ -354,6 +378,7 @@ export default {
         this.$post("/user/getUserList", { pageNum: 1, pageSize: 10 })
             .then((res) => {
                 this.displayForm = res.resultList;
+                this.dict = res.resultDicList;
                 this.totalpage = res.totalpage;
                 this.totalCount = res.totalCount;
             })

@@ -58,7 +58,7 @@ export default {
                         { index: "dictManage", name: "字典管理" },
                     ],
                 },
-                { index: "not-found", name: "NotFound" },
+                // { index: "not-found", name: "NotFound" },
                 {
                     index: "2",
                     name: "我的工作台",
